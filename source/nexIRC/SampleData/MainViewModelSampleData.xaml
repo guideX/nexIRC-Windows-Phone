@@ -1,0 +1,9 @@
+﻿<vm:MainViewModel
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="clr-namespace:nexIRC.ViewModels"
+    SampleProperty="Sample Text Property Value">
+    <vm:MainViewModel.Items>
+        <vm:IrcServerInfoModel Server="irc.freenode.org" Port="6667" Network="Freenode"/>
+    </vm:MainViewModel.Items>
+</vm:MainViewModel>

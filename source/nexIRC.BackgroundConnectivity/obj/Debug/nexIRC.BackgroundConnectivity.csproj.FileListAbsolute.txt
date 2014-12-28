@@ -1,0 +1,7 @@
+C:\dev\nexIRC_WP8.1\nexIRC\nexIRC.BackgroundConnectivity\Bin\Debug\nexIRC.BackgroundConnectivity.dll
+C:\dev\nexIRC_WP8.1\nexIRC\nexIRC.BackgroundConnectivity\Bin\Debug\nexIRC.BackgroundConnectivity.pdb
+C:\dev\nexIRC_WP8.1\nexIRC\nexIRC.BackgroundConnectivity\Bin\Debug\nexIRC.Socket.dll
+C:\dev\nexIRC_WP8.1\nexIRC\nexIRC.BackgroundConnectivity\Bin\Debug\nexIRC.Socket.pdb
+C:\dev\nexIRC_WP8.1\nexIRC\nexIRC.BackgroundConnectivity\obj\Debug\nexIRC.BackgroundConnectivity.csprojResolveAssemblyReference.cache
+C:\dev\nexIRC_WP8.1\nexIRC\nexIRC.BackgroundConnectivity\obj\Debug\nexIRC.BackgroundConnectivity.dll
+C:\dev\nexIRC_WP8.1\nexIRC\nexIRC.BackgroundConnectivity\obj\Debug\nexIRC.BackgroundConnectivity.pdb

@@ -1,0 +1,4 @@
+C:\dev\nexIRC_WP8.1\nexIRC\nexIRC.Socket\Bin\Debug\nexIRC.Socket.dll
+C:\dev\nexIRC_WP8.1\nexIRC\nexIRC.Socket\Bin\Debug\nexIRC.Socket.pdb
+C:\dev\nexIRC_WP8.1\nexIRC\nexIRC.Socket\obj\Debug\nexIRC.Socket.dll
+C:\dev\nexIRC_WP8.1\nexIRC\nexIRC.Socket\obj\Debug\nexIRC.Socket.pdb

@@ -1,0 +1,4 @@
+C:\dev\nexIRC_WP8.1\nexIRC\nexIRC.Infrustructure\Bin\Debug\nexIRC.Infrustructure.dll
+C:\dev\nexIRC_WP8.1\nexIRC\nexIRC.Infrustructure\Bin\Debug\nexIRC.Infrustructure.pdb
+C:\dev\nexIRC_WP8.1\nexIRC\nexIRC.Infrustructure\obj\Debug\nexIRC.Infrustructure.dll
+C:\dev\nexIRC_WP8.1\nexIRC\nexIRC.Infrustructure\obj\Debug\nexIRC.Infrustructure.pdb

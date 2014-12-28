@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nexIRC", "nexIRC\nexIRC.csproj", "{989B2848-1FC6-4C48-9406-E7D891234A1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nexIRC.Infrustructure", "nexIRC.Infrustructure\nexIRC.Infrustructure.csproj", "{F7D08312-F125-42F8-9573-62A74B467B10}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Debug|ARM.ActiveCfg = Debug|ARM
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Debug|ARM.Build.0 = Debug|ARM
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Debug|ARM.Deploy.0 = Debug|ARM
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Debug|x86.ActiveCfg = Debug|x86
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Debug|x86.Build.0 = Debug|x86
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Debug|x86.Deploy.0 = Debug|x86
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Release|ARM.ActiveCfg = Release|ARM
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Release|ARM.Build.0 = Release|ARM
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Release|ARM.Deploy.0 = Release|ARM
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Release|x86.ActiveCfg = Release|x86
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Release|x86.Build.0 = Release|x86
+		{989B2848-1FC6-4C48-9406-E7D891234A1D}.Release|x86.Deploy.0 = Release|x86
+		{F7D08312-F125-42F8-9573-62A74B467B10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7D08312-F125-42F8-9573-62A74B467B10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7D08312-F125-42F8-9573-62A74B467B10}.Debug|ARM.ActiveCfg = Debug|ARM
+		{F7D08312-F125-42F8-9573-62A74B467B10}.Debug|ARM.Build.0 = Debug|ARM
+		{F7D08312-F125-42F8-9573-62A74B467B10}.Debug|x86.ActiveCfg = Debug|x86
+		{F7D08312-F125-42F8-9573-62A74B467B10}.Debug|x86.Build.0 = Debug|x86
+		{F7D08312-F125-42F8-9573-62A74B467B10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7D08312-F125-42F8-9573-62A74B467B10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7D08312-F125-42F8-9573-62A74B467B10}.Release|ARM.ActiveCfg = Release|ARM
+		{F7D08312-F125-42F8-9573-62A74B467B10}.Release|ARM.Build.0 = Release|ARM
+		{F7D08312-F125-42F8-9573-62A74B467B10}.Release|x86.ActiveCfg = Release|x86
+		{F7D08312-F125-42F8-9573-62A74B467B10}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
