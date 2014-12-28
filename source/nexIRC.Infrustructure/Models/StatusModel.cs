@@ -1,24 +1,22 @@
-﻿using nexIRC.Infrustructure.Controllers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using nexIRC.Infrustructure.Controllers;
 namespace nexIRC.Infrustructure.Models {
     public class StatusModel {
-        public delegate void DataArrivalEvent(string data);
-        public event DataArrivalEvent DataArrival;
-        public string Server { get; set; }
-        public string Network { get; set; }
-        public int Port { get; set; }
+        //public delegate void DataArrivalEvent(string data);
+        //public event DataArrivalEvent DataArrival;
         public SocketController Socket { get; set; }
         private IrcSettings _settings { get; set; }
-        public StatusModel(IrcSettings settings) {
+        private StatusController _controller;
+        public StatusModel(IrcSettings settings, StatusController controller) {
             try {
+                _controller = controller;
                 _settings = settings;
-                Socket = new SocketController(settings);
+                Socket = new SocketController(settings.IrcServerInfoModel);
                 Socket.DataArrival += Socket_DataArrival;
                 Socket.ConnectedEvt += Socket_ConnectedEvt;
             } catch (Exception ex) {
@@ -27,25 +25,33 @@ namespace nexIRC.Infrustructure.Models {
         }
         void Socket_ConnectedEvt() {
             try {
-                var controller = new StatusController();
-                controller.SendIdentity(_settings);
+                _controller.SendIdentity(_settings);
             } catch (Exception ex) {
                 throw ex;
             }
         }
         void Socket_DataArrival(string data) {
             if (!string.IsNullOrEmpty(data)) {
-                if (DataArrival != null) {
-                    DataArrival(data);
-                }
+                _controller.Status_DataArrival(data);
+                //if (DataArrival != null) {
+                    //DataArrival(data);
+                //}
             }
         }
         public void Connect() {
-            var task = Task.Run(async () => { await Socket.Connect(); });
-            task.Wait();
+            try {
+                var task = Task.Run(async () => { await Socket.Connect(); });
+                task.Wait();
+            } catch (Exception ex) {
+                throw ex;
+            }
         }
         public void SendData(string data) {
-            Socket.SendData(data);
+            try {
+                Socket.SendData(data);
+            } catch (Exception ex) {
+                throw ex;
+            }
         }
     }
 }

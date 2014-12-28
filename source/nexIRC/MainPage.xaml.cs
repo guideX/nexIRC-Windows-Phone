@@ -9,8 +9,10 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using nexIRC.Infrustructure;
 using nexIRC.Infrustructure.Models;
+using nexIRC.Infrustructure.Controllers;
 namespace nexIRC {
     public partial class MainPage : PhoneApplicationPage {
+        private StatusController _controller = new StatusController();
         public MainPage() {
             InitializeComponent();
             DataContext = App.ViewModel;
@@ -21,24 +23,14 @@ namespace nexIRC {
             }
         }
         private void Panorama_Loaded(object sender, RoutedEventArgs e) {
+
         }
         private void lstNetwork_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             try {
                 if (lstNetwork.SelectedItem == null) {
                     return;
                 }
-                var infoModel = (IrcServerInfoModel)lstNetwork.SelectedItem;
-                var selector = (Microsoft.Phone.Controls.LongListSelector)sender;
-                var _settings = new IrcSettings();
-                _settings.QuitMessage = "nexIRC for Windows Phone team-nexgen.org";
-                _settings.Nickname = "guide_X";
-                _settings.Password = "";
-                _settings.Username = "guideX";
-                _settings.IrcServerInfoModel = new IrcServerInfoModel();
-                _settings.IrcServerInfoModel.Server = infoModel.Server;
-                _settings.IrcServerInfoModel.Port = infoModel.Port;
-                _settings.IrcServerInfoModel.Network = infoModel.Network;
-                var status = new StatusWindow(_settings);
+                var status = new StatusWindow(_controller.CreateStatusWindow((IrcServerInfoModel)lstNetwork.SelectedItem));
                 this.Content = status;
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);

@@ -1,5 +1,4 @@
-﻿using nexIRC.Infrustructure.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,19 +6,37 @@ using System.Threading.Tasks;
 using Windows.Networking;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
+using nexIRC.Infrustructure.Models;
 namespace nexIRC.Infrustructure.Controllers {
     public class SocketController {
+        #region "events"
+        /// <summary>
+        /// Data Arrival Event
+        /// </summary>
+        /// <param name="data"></param>
         public delegate void DataArrivalEvent(string data);
         public event DataArrivalEvent DataArrival;
+        /// <summary>
+        /// Connected Event
+        /// </summary>
         public delegate void ConnectedEvent();
         public event ConnectedEvent ConnectedEvt;
+        #endregion
+        #region "public properties"
         public bool Closing { get; set; }
         public bool Connecting { get; set; }
         public bool Connected { get; set; }
-        private IrcSettings _settings { get; set; }
+        #endregion
+        #region "private properties"
+        private IrcServerInfoModel _settings { get; set; }
         private readonly StreamSocket _clientSocket;
         private DataReader _dataReader;
-        public SocketController(IrcSettings settings) {
+        #endregion
+        /// <summary>
+        /// Entry Point (requires settings)
+        /// </summary>
+        /// <param name="settings"></param>
+        public SocketController(IrcServerInfoModel settings) {
             try {
                 Connecting = true;
                 _clientSocket = new StreamSocket();
@@ -28,11 +45,15 @@ namespace nexIRC.Infrustructure.Controllers {
                 throw ex;
             }
         }
+        /// <summary>
+        /// Connect Function
+        /// </summary>
+        /// <returns></returns>
         public async Task<bool> Connect() {
             try {
                 if (Connected) return false;
-                var hostname = new HostName(_settings.IrcServerInfoModel.Server);
-                await _clientSocket.ConnectAsync(hostname, _settings.IrcServerInfoModel.Port.ToString());
+                var hostname = new HostName(_settings.Server);
+                await _clientSocket.ConnectAsync(hostname, _settings.Port.ToString());
                 Connected = true;
                 if (ConnectedEvt != null) {
                     ConnectedEvt();
@@ -47,6 +68,9 @@ namespace nexIRC.Infrustructure.Controllers {
                 throw ex;
             }
         }
+        /// <summary>
+        /// Read Data Function
+        /// </summary>
         async private void ReadData() {
             try {
                 if (!Connected || _clientSocket == null) return;
@@ -62,6 +86,10 @@ namespace nexIRC.Infrustructure.Controllers {
                 throw ex;
             }
         }
+        /// <summary>
+        /// Send Data
+        /// </summary>
+        /// <param name="message"></param>
         async public void SendData(string message) {
             try {
                 var writer = new DataWriter(_clientSocket.OutputStream);

@@ -9,9 +9,9 @@ namespace nexIRC {
         public StatusWindow(IrcSettings settings) {
             InitializeComponent();
             _statusController = new StatusController();
-            _statusModel = new StatusModel(settings);
+            _statusModel = new StatusModel(settings, _statusController);
             _statusModel.Connect();
-            _statusModel.DataArrival += _statusModel_DataArrival;
+            //_statusModel.DataArrival += _statusModel_DataArrival;
             _statusController.SendData += _statusController_SendData;
             txtOutgoing.KeyUp += txtOutgoing_KeyUp;
             pvtStatus.Title = settings.IrcServerInfoModel.Network;
@@ -32,14 +32,14 @@ namespace nexIRC {
                     break;
             }
         }
-        void _statusModel_DataArrival(string data) {
-            try {
-                var controller = new StatusController();
-                controller.Status_DataArrival(data);
+        //void _statusModel_DataArrival(string data) {
+            //try {
+                //var controller = new StatusController();
+                //controller.Status_DataArrival(data);
                 //this.Dispatcher.BeginInvoke(new Action(() => txtIncoming.Text = txtIncoming.Text + Environment.NewLine + data));
-            } catch (Exception ex) {
-                throw ex;
-            }
-        }
+            //} catch (Exception ex) {
+                //throw ex;
+            //}
+        //}
     }
 }

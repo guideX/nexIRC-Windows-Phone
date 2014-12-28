@@ -1,6 +1,7 @@
-﻿using nexIRC.Infrustructure.Helpers;
+﻿using System;
+using nexIRC.Infrustructure.Helpers;
 using nexIRC.Infrustructure.Models;
-using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 namespace nexIRC.Infrustructure.Controllers {
@@ -9,6 +10,20 @@ namespace nexIRC.Infrustructure.Controllers {
         public event SendDataEvent SendData;
         public delegate void DisconnectedEvent();
         public event DisconnectedEvent DisconnectedEvt;
+        public List<IrcSettings> IrcSettings = new List<IrcSettings>();
+        public IrcSettings CreateStatusWindow(IrcServerInfoModel ircServerInfoModel) {
+            var _settings = new IrcSettings();
+            _settings.QuitMessage = "nexIRC for Windows Phone team-nexgen.org";
+            _settings.Nickname = "guide_X";
+            _settings.Password = "";
+            _settings.Username = "guideX";
+            _settings.IrcServerInfoModel = new IrcServerInfoModel();
+            _settings.IrcServerInfoModel.Server = ircServerInfoModel.Server;
+            _settings.IrcServerInfoModel.Port = ircServerInfoModel.Port;
+            _settings.IrcServerInfoModel.Network = ircServerInfoModel.Network;
+            IrcSettings.Add(_settings);
+            return _settings;
+        }
         public void Status_DataArrival(string data) {
             try {
                 if (string.IsNullOrEmpty(data)) {
