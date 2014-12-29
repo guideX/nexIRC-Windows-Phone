@@ -1,5 +1,6 @@
 ﻿namespace nexIRC.Infrustructure.Structures {
     public enum IrcNumerics {
+        sNOTHING = 0,
         sRPL_WELCOME = 1,
         //  The first message sent after client  . The text used varies widely
         //  The server sends Replies 001 to 004 to a user upon successful registration.
@@ -178,8 +179,8 @@
         //  Server notice mask (hex)
         //  IRCU:                     %d :: Server notice mask (%#x)
         //  UNREAL:                   :%s 008 %s :Server notice mask (%s)
-        sRPL_STATMEMTOT = 9,
-        //IRCU
+        //sRPL_STATMEMTOT = 9,
+        //IRCU (Can't find information regaurding this)
         sRPL_BOUNCE_2 = 10,
         //  Sent to the client to redirect it to another server. Also known as RPL_REDIR
         //  RFC2812:                  <hostname> <port> :<info>

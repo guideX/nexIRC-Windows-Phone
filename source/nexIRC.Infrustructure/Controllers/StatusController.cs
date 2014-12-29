@@ -11,7 +11,6 @@ namespace nexIRC.Infrustructure.Controllers {
         public string l002 { get; set; }
         public string l003 { get; set; }
         public string l004 { get; set; }
-        public string l005 { get; set; }
     }
     public class StatusController {
         public delegate void DoStatusText(string data);
@@ -56,8 +55,11 @@ namespace nexIRC.Infrustructure.Controllers {
                 //}
                 int.TryParse(splt[1], out numeric);
                 switch ((IrcNumerics)numeric) {
+                    case IrcNumerics.sNOTHING:
+                        // DO NOTHING
+                        break;
                     case IrcNumerics.sRPL_WELCOME:
-                        _cachedIrcMessages.l001 = "[ login " + _settings.IrcServerInfoModel.Network + " ] > welcome message: " + splt2[2];
+                        _cachedIrcMessages.l001 = "[ login " + _settings.IrcServerInfoModel.Network + " ] welcome message: " + splt2[2];
                         Check001Through004();
                         break;
                     case IrcNumerics.sRPL_YOURHOST:
@@ -76,6 +78,46 @@ namespace nexIRC.Infrustructure.Controllers {
                         _cachedIrcMessages.l004 = "> Servername: " + splt3[0] + Environment.NewLine + "> Version: " + splt3[1] + Environment.NewLine + "> Usermodes: " + splt3[2] + Environment.NewLine + "> Channel Modes: " + splt3[3];
                         Check001Through004();
                         break;
+                    case IrcNumerics.sRPL_MAP:
+                        StatusText("[ map ] " + splt2[2]);    
+                        break;
+                    case IrcNumerics.sRPL_MAPEND:
+                        StatusText("[ end of map ] " + splt2[2]);
+                        break;
+                    case IrcNumerics.sRPL_SNOMASK:
+                        StatusText("[ server notice mask ] " + splt2[2]);
+                        break;
+                    case IrcNumerics.sRPL_BOUNCE_2:
+                        StatusText("[ server recommends redirect ] " + splt2[2]);
+                        break;
+                    case IrcNumerics.sRPL_TRACEHANDSHAKE:
+                        splt3 = splt2[2].Split(' ');
+                        StatusText("[ trace handshake ] class: " + splt3[1] + ", server: " + splt3[2]);
+                        break;
+                    case IrcNumerics.sRPL_TRACEUNKNOWN:
+                        splt3 = splt2[2].Split(' ');
+                        StatusText("[ trace unknown ] address: " + splt3[1] + ", " + splt3[4]);
+                        break;
+                    case IrcNumerics.sRPL_TRACEOPERATOR:
+                        splt3 = splt2[2].Split(' ');
+                        StatusText("[ trace operator ] class: " + splt3[1] + ", nick: " + splt3[2]);
+                        break;
+                    default:
+                        if (splt2[2] != null) {
+                            if (!string.IsNullOrEmpty(splt2[2])) {
+                                StatusText(splt2[2]);
+                            }
+                        }
+                        break;
+                }
+            } catch (Exception ex) {
+                throw ex;
+            }
+        }
+        private void StatusText(string data) {
+            try {
+                if (OnDoStatusText != null) {
+                    OnDoStatusText(data);
                 }
             } catch (Exception ex) {
                 throw ex;
@@ -84,9 +126,7 @@ namespace nexIRC.Infrustructure.Controllers {
         private void Check001Through004() {
             try {
                 if (!string.IsNullOrEmpty(_cachedIrcMessages.l001) && !string.IsNullOrEmpty(_cachedIrcMessages.l002) && !string.IsNullOrEmpty(_cachedIrcMessages.l003) && !string.IsNullOrEmpty(_cachedIrcMessages.l004)) {
-                    if (OnDoStatusText != null) {
-                        OnDoStatusText("-" + Environment.NewLine + _cachedIrcMessages.l001 + Environment.NewLine + _cachedIrcMessages.l002 + Environment.NewLine + _cachedIrcMessages.l003 + Environment.NewLine + _cachedIrcMessages.l004 + Environment.NewLine + "-");
-                    }
+                    StatusText("-" + Environment.NewLine + _cachedIrcMessages.l001 + Environment.NewLine + _cachedIrcMessages.l002 + Environment.NewLine + _cachedIrcMessages.l003 + Environment.NewLine + _cachedIrcMessages.l004 + Environment.NewLine + "-");
                 }
             } catch (Exception ex) {
                 throw ex;
@@ -101,6 +141,10 @@ namespace nexIRC.Infrustructure.Controllers {
         }
         public void SendIdentity(IrcSettings settings) {
             try {
+                if (!settings.IsValid()) {
+                    MessageBox.Show("Error, Invalid Settings.");
+                    return;
+                }
                 if (SendData != null) {
                     if (settings.Nickname == string.Empty) settings.Nickname = settings.Username;
                     SendData("NICK " + settings.Nickname);

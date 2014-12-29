@@ -16,12 +16,24 @@ namespace nexIRC.Infrustructure.Models {
         /// <returns></returns>
         public string Server {
             get {
-                return _server;
+                try {
+                    if (!string.IsNullOrEmpty(_server)) {
+                        return _server;
+                    } else {
+                        return "";
+                    }
+                } catch (Exception ex) {
+                    throw ex;
+                }
             }
             set {
-                if (value != _server) {
-                    _server = value;
-                    NotifyPropertyChanged("Server");
+                try {
+                    if (value != _server) {
+                        _server = value;
+                        NotifyPropertyChanged("Server");
+                    }
+                } catch (Exception ex) {
+                    throw ex;
                 }
             }
         }
@@ -31,7 +43,11 @@ namespace nexIRC.Infrustructure.Models {
         /// <returns></returns>
         public int Port {
             get {
-                return _port;
+                try {
+                    return _port;
+                } catch (Exception ex) {
+                    throw ex;
+                }
             }
             set {
                 if (value != _port) {
@@ -46,19 +62,35 @@ namespace nexIRC.Infrustructure.Models {
         /// <returns></returns>
         public string Network {
             get {
-                return _network;
+                try {
+                    if (!string.IsNullOrEmpty(_network)) {
+                        return _network;
+                    } else {
+                        return "";
+                    }
+                } catch (Exception ex) {
+                    throw ex;
+                }
             }
             set {
-                if (value != _network) {
-                    _network = value;
-                    NotifyPropertyChanged("Network");
+                try {
+                    if (value != _network) {
+                        _network = value;
+                        NotifyPropertyChanged("Network");
+                    }
+                } catch (Exception ex) {
+                    throw ex;
                 }
             }
         }
         private void NotifyPropertyChanged(String propertyName) {
-            var handler = PropertyChanged;
-            if (null != handler) {
-                handler(this, new PropertyChangedEventArgs(propertyName));
+            try {
+                var handler = PropertyChanged;
+                if (null != handler) {
+                    handler(this, new PropertyChangedEventArgs(propertyName));
+                }
+            } catch (Exception ex) {
+                throw ex;
             }
         }
     }
