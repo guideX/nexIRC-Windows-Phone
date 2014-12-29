@@ -16,7 +16,7 @@ namespace nexIRC {
                 DataContext = App.ViewModel;
                 btnSettings.MouseLeftButtonDown += btnSettings_MouseLeftButtonDown;
             } catch (Exception ex) {
-                throw ex;
+                MessageBox.Show(ex.Message);
             }
         }
         /// <summary>
@@ -29,7 +29,7 @@ namespace nexIRC {
                 var status = new Customize(StatusHelper.CreateStatusWindow(StatusHelper.GetSettings().IrcServerInfoModel));
                 this.Content = status;
             } catch (Exception ex) {
-                throw ex;
+                MessageBox.Show(ex.Message);
             }
         }
         /// <summary>
@@ -42,7 +42,7 @@ namespace nexIRC {
                     App.ViewModel.LoadData();
                 }
             } catch (Exception ex) {
-                throw ex;
+                MessageBox.Show(ex.Message);
             }
         }
         private void Panorama_Loaded(object sender, RoutedEventArgs e) {
