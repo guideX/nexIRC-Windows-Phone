@@ -12,9 +12,6 @@
     </Capabilities>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
-      <ExtendedTask Name="BackgroundTask">
-        <BackgroundServiceAgent Specifier="AudioStreamingAgent" Name="nexIRC.Socket" Source="nexIRC.Socket" Type="nexIRC.Socket.BackgroundSocket" />
-      </ExtendedTask>
     </Tasks>
     <Tokens>
       <PrimaryToken TokenID="nexIRCToken" TaskName="_default">

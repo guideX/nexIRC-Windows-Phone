@@ -17,6 +17,7 @@ namespace nexIRC.Infrustructure.Controllers {
                 if (string.IsNullOrEmpty(data)) {
                     return;
                 }
+                RawEvt(data);
                 if (StringHelper.Left(data.ToLower(), 21) == "error :closing link: ") {
                     if (DisconnectedEvt != null) {
                         DisconnectedEvt();
@@ -25,7 +26,9 @@ namespace nexIRC.Infrustructure.Controllers {
                 if (Regex.IsMatch(data, "PING :[0-9]+\\r\\n")) {
                     ReplyPong(data);
                 }
-                RawEvt(data);
+                if (StringHelper.Left(data.ToLower(), 7) == "version") {
+
+                }
             } catch (Exception ex) {
                 throw ex;
             }
