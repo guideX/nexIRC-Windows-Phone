@@ -92,15 +92,27 @@ namespace nexIRC.Infrustructure.Controllers {
                         break;
                     case IrcNumerics.sRPL_TRACEHANDSHAKE:
                         splt3 = splt2[2].Split(' ');
-                        StatusText("[ trace handshake ] class: " + splt3[1] + ", server: " + splt3[2]);
+                        StatusText("[ trace handshake ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> server: " + splt3[2]);
                         break;
                     case IrcNumerics.sRPL_TRACEUNKNOWN:
                         splt3 = splt2[2].Split(' ');
-                        StatusText("[ trace unknown ] address: " + splt3[1] + ", " + splt3[4]);
+                        StatusText("[ trace unknown ]  " +  Environment.NewLine + "> address: " + splt3[1] + Environment.NewLine + "> address: " + splt3[4]);
                         break;
                     case IrcNumerics.sRPL_TRACEOPERATOR:
                         splt3 = splt2[2].Split(' ');
-                        StatusText("[ trace operator ] class: " + splt3[1] + ", nick: " + splt3[2]);
+                        StatusText("[ trace operator ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> nick: " + splt3[2]);
+                        break;
+                    case IrcNumerics.sRPL_TRACEUSER:
+                        splt3 = splt2[2].Split(' ');
+                        StatusText("[ trace user ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> nick: " + splt3[2]);
+                        break;
+                    case IrcNumerics.sRPL_TRACESERVER:
+                        splt3 = splt2[2].Split(' ');
+                        StatusText("[ trace server ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> server: " + splt3[4] + Environment.NewLine + "> nickandhost: " + splt3[5]  + Environment.NewLine + "> protocol version: " + splt3[6]);
+                        break;
+                    case IrcNumerics.sRPL_TRACESERVICE:
+                        splt3 = splt2[2].Split(' ');
+                        StatusText("[ trace service ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> name: " + splt3[2] + Environment.NewLine + "> type: " + splt3[3] + Environment.NewLine + "> active type: " + splt3[4]);
                         break;
                     default:
                         if (splt2[2] != null) {
