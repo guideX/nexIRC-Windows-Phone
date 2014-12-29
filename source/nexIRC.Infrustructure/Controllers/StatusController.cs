@@ -10,16 +10,18 @@ namespace nexIRC.Infrustructure.Controllers {
         public event SendDataEvent SendData;
         public delegate void RawEvent(string data);
         public event RawEvent RawEvt;
+        public delegate void DisconnectedEvent();
+        public event DisconnectedEvent DisconnectedEvt;
         public void Status_DataArrival(string data) {
             try {
                 if (string.IsNullOrEmpty(data)) {
                     return;
                 }
-                //if (StringHelper.Left(data.ToLower(), 21) == "error :closing link: ") {
-                    //if (DisconnectedEvt != null) {
-                        //DisconnectedEvt();
-                    //}
-                //}
+                if (StringHelper.Left(data.ToLower(), 21) == "error :closing link: ") {
+                    if (DisconnectedEvt != null) {
+                        DisconnectedEvt();
+                    }
+                }
                 if (Regex.IsMatch(data, "PING :[0-9]+\\r\\n")) {
                     ReplyPong(data);
                 }

@@ -2,6 +2,7 @@
 using Microsoft.Phone.Controls;
 using nexIRC.Infrustructure.Controllers;
 using nexIRC.Infrustructure.Models;
+using Windows.Phone.UI.Input;
 namespace nexIRC {
     public partial class StatusWindow : PhoneApplicationPage {
         private StatusModel _model;
@@ -13,8 +14,16 @@ namespace nexIRC {
             _model.Connect();
             //_statusModel.DataArrival += _statusModel_DataArrival;
             _controller.SendData += _statusController_SendData;
+            _controller.DisconnectedEvt += _controller_DisconnectedEvt;
             txtOutgoing.KeyUp += txtOutgoing_KeyUp;
             pvtStatus.Title = settings.IrcServerInfoModel.Network;
+        }
+        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e) {
+            e.Handled = true;
+        }
+
+        void _controller_DisconnectedEvt() {
+            _model.Socket.Close();
         }
         void _statusController_SendData(string data) {
             _model.SendData(data);

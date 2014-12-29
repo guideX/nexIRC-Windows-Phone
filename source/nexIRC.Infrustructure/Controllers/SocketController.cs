@@ -105,5 +105,17 @@ namespace nexIRC.Infrustructure.Controllers {
                 throw ex;
             }
         }
+        /// <summary>
+        /// Close
+        /// </summary>
+        public void Close() {
+            try {
+                Closing = false;
+                Connected = false;
+                _clientSocket.Dispose();
+            } catch (Exception ex) {
+                throw ex;
+            }
+        }
     }
 }

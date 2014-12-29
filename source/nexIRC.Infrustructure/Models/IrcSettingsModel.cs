@@ -5,8 +5,8 @@ namespace nexIRC.Infrustructure.Models {
         public string AltNickname { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public IrcServerInfoModel IrcServerInfoModel { get; set; }
         public string QuitMessage { get; set; }
+        public IrcServerInfoModel IrcServerInfoModel { get; set; }
         public List<string> RawText { get; set; }
     }
 }

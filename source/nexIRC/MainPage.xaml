@@ -24,7 +24,7 @@
                 <ImageBrush ImageSource="/nexIRC;component/Assets/PanoramaBackground.png"/>
             </phone:Panorama.Background>
             <phone:PanoramaItem>
-                <phone:LongListSelector Margin="0,-38,-22,2" ItemsSource="{Binding Items}" Name="lstNetwork" SelectionChanged="lstNetwork_SelectionChanged">
+                <phone:LongListSelector Margin="0,-36,-22,0" ItemsSource="{Binding Items}" Name="lstNetwork" SelectionChanged="lstNetwork_SelectionChanged">
                     <phone:LongListSelector.ListHeaderTemplate>
                         <DataTemplate>
                             <Grid Margin="12,0,0,38">
@@ -59,7 +59,8 @@
                 <Grid>
                     <StackPanel Margin="0,4,16,0" Orientation="Vertical" VerticalAlignment="Top">
                         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
+                            <Border Name="btnSettings"  Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0">
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30">Customize</TextBlock></Border>
                             <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
                             <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
                             <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
