@@ -97,9 +97,10 @@ namespace nexIRC.Infrustructure.Controllers {
                 await writer.StoreAsync();
                 await writer.FlushAsync();
                 writer.DetachStream();
-                if (!Closing) return;
-                _clientSocket.Dispose();
-                Connected = false;
+                if (Closing) {
+                    _clientSocket.Dispose();
+                    Connected = false;
+                }
             } catch (Exception ex) {
                 throw ex;
             }

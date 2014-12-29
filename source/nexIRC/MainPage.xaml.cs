@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Net;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-using nexIRC.Infrustructure;
+using nexIRC.Infrustructure.Helpers;
 using nexIRC.Infrustructure.Models;
-using nexIRC.Infrustructure.Controllers;
 namespace nexIRC {
     public partial class MainPage : PhoneApplicationPage {
-        private StatusController _controller = new StatusController();
         public MainPage() {
             InitializeComponent();
             DataContext = App.ViewModel;
@@ -30,7 +24,7 @@ namespace nexIRC {
                 if (lstNetwork.SelectedItem == null) {
                     return;
                 }
-                var status = new StatusWindow(_controller.CreateStatusWindow((IrcServerInfoModel)lstNetwork.SelectedItem));
+                var status = new StatusWindow(StatusHelper.CreateStatusWindow((IrcServerInfoModel)lstNetwork.SelectedItem));
                 this.Content = status;
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);

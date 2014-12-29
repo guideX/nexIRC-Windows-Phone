@@ -12,6 +12,11 @@ namespace nexIRC.Infrustructure.Models {
         public SocketController Socket { get; set; }
         private IrcSettings _settings { get; set; }
         private StatusController _controller;
+        /// <summary>
+        /// Status Model Entry Point
+        /// </summary>
+        /// <param name="settings"></param>
+        /// <param name="controller"></param>
         public StatusModel(IrcSettings settings, StatusController controller) {
             try {
                 _controller = controller;
@@ -19,10 +24,25 @@ namespace nexIRC.Infrustructure.Models {
                 Socket = new SocketController(settings.IrcServerInfoModel);
                 Socket.DataArrival += Socket_DataArrival;
                 Socket.ConnectedEvt += Socket_ConnectedEvt;
+                _controller.RawEvt += _controller_RawEvt;
             } catch (Exception ex) {
                 throw ex;
             }
         }
+        /// <summary>
+        /// Collect Raw Data
+        /// </summary>
+        /// <param name="data"></param>
+        void _controller_RawEvt(string data) {
+            try {
+                _settings.RawText.Add(data);
+            } catch (Exception ex) {
+                throw ex;
+            }
+        }
+        /// <summary>
+        /// Connected Event
+        /// </summary>
         void Socket_ConnectedEvt() {
             try {
                 _controller.SendIdentity(_settings);
@@ -30,6 +50,10 @@ namespace nexIRC.Infrustructure.Models {
                 throw ex;
             }
         }
+        /// <summary>
+        /// Socket DataArrival
+        /// </summary>
+        /// <param name="data"></param>
         void Socket_DataArrival(string data) {
             if (!string.IsNullOrEmpty(data)) {
                 _controller.Status_DataArrival(data);
@@ -38,6 +62,9 @@ namespace nexIRC.Infrustructure.Models {
                 //}
             }
         }
+        /// <summary>
+        /// Connect Function
+        /// </summary>
         public void Connect() {
             try {
                 var task = Task.Run(async () => { await Socket.Connect(); });
@@ -46,6 +73,10 @@ namespace nexIRC.Infrustructure.Models {
                 throw ex;
             }
         }
+        /// <summary>
+        /// Send Data
+        /// </summary>
+        /// <param name="data"></param>
         public void SendData(string data) {
             try {
                 Socket.SendData(data);

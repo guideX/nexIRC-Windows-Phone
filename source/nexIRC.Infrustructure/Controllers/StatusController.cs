@@ -8,35 +8,22 @@ namespace nexIRC.Infrustructure.Controllers {
     public class StatusController {
         public delegate void SendDataEvent(string data);
         public event SendDataEvent SendData;
-        public delegate void DisconnectedEvent();
-        public event DisconnectedEvent DisconnectedEvt;
-        public List<IrcSettings> IrcSettings = new List<IrcSettings>();
-        public IrcSettings CreateStatusWindow(IrcServerInfoModel ircServerInfoModel) {
-            var _settings = new IrcSettings();
-            _settings.QuitMessage = "nexIRC for Windows Phone team-nexgen.org";
-            _settings.Nickname = "guide_X";
-            _settings.Password = "";
-            _settings.Username = "guideX";
-            _settings.IrcServerInfoModel = new IrcServerInfoModel();
-            _settings.IrcServerInfoModel.Server = ircServerInfoModel.Server;
-            _settings.IrcServerInfoModel.Port = ircServerInfoModel.Port;
-            _settings.IrcServerInfoModel.Network = ircServerInfoModel.Network;
-            IrcSettings.Add(_settings);
-            return _settings;
-        }
+        public delegate void RawEvent(string data);
+        public event RawEvent RawEvt;
         public void Status_DataArrival(string data) {
             try {
                 if (string.IsNullOrEmpty(data)) {
                     return;
                 }
-                if (StringHelper.Left(data.ToLower(), 21) == "error :closing link: ") {
-                    if (DisconnectedEvt != null) {
-                        DisconnectedEvt();
-                    }
-                }
+                //if (StringHelper.Left(data.ToLower(), 21) == "error :closing link: ") {
+                    //if (DisconnectedEvt != null) {
+                        //DisconnectedEvt();
+                    //}
+                //}
                 if (Regex.IsMatch(data, "PING :[0-9]+\\r\\n")) {
                     ReplyPong(data);
                 }
+                RawEvt(data);
             } catch (Exception ex) {
                 throw ex;
             }
@@ -76,9 +63,6 @@ namespace nexIRC.Infrustructure.Controllers {
             try {
                 if (SendData != null) {
                     SendData("QUIT :");
-                }
-                if (DisconnectedEvt != null) {
-                    DisconnectedEvt();
                 }
             } catch (Exception ex) {
                 throw ex;

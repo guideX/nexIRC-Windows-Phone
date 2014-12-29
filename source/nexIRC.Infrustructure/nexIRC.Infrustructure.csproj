@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Controllers\SocketController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
+    <Compile Include="Helpers\StatusHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Models\IrcServerInfoModel.cs" />
     <Compile Include="Models\IrcSettingsModel.cs" />

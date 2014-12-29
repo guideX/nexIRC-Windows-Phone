@@ -13,6 +13,7 @@ namespace nexIRC.ViewModels {
         /// A collection for ItemViewModel objects.
         /// </summary>
         public ObservableCollection<IrcServerInfoModel> Items { get; private set; }
+        /*
         private string _sampleProperty = "Sample Runtime Property Value";
         /// <summary>
         /// Sample ViewModel property; this property is used in the view to display its value using a Binding
@@ -21,8 +22,7 @@ namespace nexIRC.ViewModels {
         public string SampleProperty {
             get {
                 return _sampleProperty;
-            }
-            set {
+            } set {
                 if (value != _sampleProperty) {
                     _sampleProperty = value;
                     NotifyPropertyChanged("SampleProperty");
@@ -37,6 +37,7 @@ namespace nexIRC.ViewModels {
                 return AppResources.SampleProperty;
             }
         }
+        */
         public bool IsDataLoaded {
             get;
             private set;
