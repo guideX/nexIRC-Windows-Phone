@@ -158,6 +158,30 @@ namespace nexIRC.Infrustructure.Controllers {
                             splt3 = splt2[2].Split(' ');
                             StatusText("[ status link info ] " + Environment.NewLine + "> link name: " + splt3[0] + Environment.NewLine + "> sendq: " + splt3[1] + Environment.NewLine + "> sent messages: " + splt3[2] + Environment.NewLine + "> sent bytes: " + splt3[3] + Environment.NewLine + "> recv msgs: " + splt3[4] + Environment.NewLine + "> recv bytes: " + splt3[5] + Environment.NewLine + "> time open: " + splt3[6]);
                             break;
+                        case IrcNumerics.sRPL_STATSCOMMANDS:
+                            splt3 = splt2[2].Split(' ');
+                            StatusText("[ stats commands ] " + Environment.NewLine + "> command: " + splt3[0] + Environment.NewLine + "> count: " + splt3[1] + Environment.NewLine + "> byte count: " + splt3[2] + Environment.NewLine + "> remote count: " + splt3[3]);
+                            break;
+                        case IrcNumerics.sRPL_STATSCLINE:
+                            splt3 = splt2[2].Split(' ');
+                            StatusText("[ stats cline ] " + Environment.NewLine + "> host: " + splt3[1] + Environment.NewLine + "> name: " + splt3[3] + Environment.NewLine + "> port: " + splt3[4] + Environment.NewLine + "> class: " + splt3[5]);
+                            break;
+                        case IrcNumerics.sRPL_STATSNLINE:
+                            splt3 = splt2[2].Split(' ');
+                            StatusText("[ stats nline ] " + Environment.NewLine + "> host: " + splt3[1] + Environment.NewLine + "> name: " + splt3[3] + Environment.NewLine + "> port: " + splt3[4] + Environment.NewLine + "> class: " + splt3[5]);
+                            break;
+                        case IrcNumerics.sRPL_STATSILINE:
+                            splt3 = splt2[2].Split(' ');
+                            StatusText("[ stats iline ] " + Environment.NewLine + "> host: " + splt3[1] + Environment.NewLine + "> name: " + splt3[3] + Environment.NewLine + "> port: " + splt3[4] + Environment.NewLine + "> class: " + splt3[5]);
+                            break;
+                        case IrcNumerics.sRPL_STATSKLINE:
+                            splt3 = splt2[2].Split(' ');
+                            StatusText("[ stats kline ] " + Environment.NewLine + "> host: " + splt3[1] + Environment.NewLine + "> name: " + splt3[3] + Environment.NewLine + "> port: " + splt3[4] + Environment.NewLine + "> class: " + splt3[5]);
+                            break;
+                        case IrcNumerics.sRPL_STATSYLINE:
+                            splt3 = splt2[2].Split(' ');
+                            StatusText("[ stats yline ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> ping: " + splt3[2] + Environment.NewLine + "> connect: " + splt3[3] + Environment.NewLine + "> sendq: " + splt3[4]);
+                            break;
                         default:
                             if (splt2[2] != null) {
                                 if (!string.IsNullOrEmpty(splt2[2])) {
