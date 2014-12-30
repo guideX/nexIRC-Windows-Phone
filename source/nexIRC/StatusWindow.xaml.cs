@@ -11,18 +11,25 @@ namespace nexIRC {
         public StatusWindow(IrcSettings settings) {
             try {
                 InitializeComponent();
+                pvtStatus.Title = settings.IrcServerInfoModel.Network;
+                txtOutgoing.KeyUp += txtOutgoing_KeyUp;
                 _controller = new StatusController(settings);
+                _controller.OnDoStatusText += _controller_OnDoStatusText;
+                _controller.SendData += _controller_SendData;
+                _controller.RawEvt += _controller_RawEvt;
+                _controller.DisconnectedEvt += _controller_DisconnectedEvt;
                 _model = new StatusModel(settings, _controller);
                 _model.Connect();
-                //_statusModel.DataArrival += _statusModel_DataArrival;
-                _controller.SendData += _statusController_SendData;
-                _controller.DisconnectedEvt += _controller_DisconnectedEvt;
-                txtOutgoing.KeyUp += txtOutgoing_KeyUp;
-                _controller.OnDoStatusText += _controller_OnDoStatusText;
-                pvtStatus.Title = settings.IrcServerInfoModel.Network;
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
+        }
+        void _controller_RawEvt(string data) {
+            try {
+                this.Dispatcher.BeginInvoke(new Action(() => txtRawIncoming.Text = txtRawIncoming.Text + Environment.NewLine + data));
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }    
         }
         void _controller_OnDoStatusText(string data) {
             try {
@@ -38,7 +45,7 @@ namespace nexIRC {
                 MessageBox.Show(ex.Message);
             }
         }
-        void _statusController_SendData(string data) {
+        void _controller_SendData(string data) {
             try {
                 _model.SendData(data);
             } catch (Exception ex) {
@@ -61,17 +68,5 @@ namespace nexIRC {
                 MessageBox.Show(ex.Message);
             }
         }
-        //void _statusModel_DataArrival(string data) {
-            //try {
-                //var controller = new StatusController();
-                //controller.Status_DataArrival(data);
-                //this.Dispatcher.BeginInvoke(new Action(() => txtIncoming.Text = txtIncoming.Text + Environment.NewLine + data));
-            //} catch (Exception ex) {
-                //throw ex;
-            //}
-        //}
-        //private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e) {
-            //e.Handled = true;
-        //}
     }
 }

@@ -76,13 +76,10 @@ namespace nexIRC.Infrustructure.Models {
         }
         public bool IsValid() {
             try {
-                if (!string.IsNullOrEmpty(_nickname)) {
+                if (string.IsNullOrEmpty(_nickname)) {
                     return false;
                 }
-                if (!string.IsNullOrEmpty(_altNickname)) {
-                    return false;
-                }
-                if (!string.IsNullOrEmpty(_username)) {
+                if (string.IsNullOrEmpty(_username)) {
                     return false;
                 }
                 return true;

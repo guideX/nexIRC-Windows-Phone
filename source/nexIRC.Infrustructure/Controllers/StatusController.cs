@@ -6,13 +6,20 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using nexIRC.Infrustructure.Structures;
 namespace nexIRC.Infrustructure.Controllers {
+    /// <summary>
+    /// Cached Irc Messages
+    /// </summary>
     public class CachedIrcMessages {
         public string l001 { get; set; }
         public string l002 { get; set; }
         public string l003 { get; set; }
         public string l004 { get; set; }
     }
+    /// <summary>
+    /// Status Controller
+    /// </summary>
     public class StatusController {
+        #region "events"
         public delegate void DoStatusText(string data);
         public event DoStatusText OnDoStatusText;
         public delegate void SendDataEvent(string data);
@@ -21,24 +28,37 @@ namespace nexIRC.Infrustructure.Controllers {
         public event RawEvent RawEvt;
         public delegate void DisconnectedEvent();
         public event DisconnectedEvent DisconnectedEvt;
+        #endregion
+        #region "private variables"
         private IrcSettings _settings;
         private CachedIrcMessages _cachedIrcMessages = new CachedIrcMessages();
+        #endregion
+        /// <summary>
+        /// Entry Point
+        /// </summary>
+        /// <param name="settings"></param>
         public StatusController(IrcSettings settings) {
             _settings = settings;
         }
+        /// <summary>
+        /// On Do Status Text
+        /// </summary>
+        /// <param name="data"></param>
         void _ircStringHelper_OnDoStatusText(string data) {
             if (OnDoStatusText != null) {
                 OnDoStatusText(data);
             }
         }
+        /// <summary>
+        /// Data Arrival
+        /// </summary>
+        /// <param name="data"></param>
         public void Status_DataArrival(string data) {
             try {
-                string[] splt = data.Split(' ');
-                string[] splt2 = data.Split(':');
-                int numeric = 0;
                 if (string.IsNullOrEmpty(data)) {
                     return;
                 }
+                var numeric = 0;
                 RawEvt(data);
                 if (StringHelper.Left(data.ToLower(), 21) == "error :closing link: ") {
                     if (DisconnectedEvt != null) {
@@ -51,76 +71,101 @@ namespace nexIRC.Infrustructure.Controllers {
                         SendData("PONG :" + pingCode);
                     }
                 }
-                //if (StringHelper.Left(data.ToLower(), 7) == "version") {
-                //}
-                int.TryParse(splt[1], out numeric);
-                switch ((IrcNumerics)numeric) {
-                    case IrcNumerics.sNOTHING:
-                        // DO NOTHING
-                        break;
-                    case IrcNumerics.sRPL_WELCOME:
-                        _cachedIrcMessages.l001 = "[ login " + _settings.IrcServerInfoModel.Network + " ] welcome message: " + splt2[2];
-                        Check001Through004();
-                        break;
-                    case IrcNumerics.sRPL_YOURHOST:
-                        var host = (StringHelper.ParseData(splt2[2], "version ", StringHelper.Right(splt2[2], 2) + StringHelper.Right(splt2[2], 3))).Replace("host is", "");
-                        var version = (StringHelper.ParseData(splt2[2], "version ", StringHelper.Right(splt2[2], 2)) + StringHelper.Right(splt2[2], 3)).Replace("version", "");
-                        _cachedIrcMessages.l002 = "> host: " + host + Environment.NewLine + "> version: " + version;
-                        Check001Through004();
-                        break;
-                    case IrcNumerics.sRPL_CREATED:
-                        var created = StringHelper.ParseData(splt2[2], "created", StringHelper.Right(splt2[2], 1));
-                        _cachedIrcMessages.l003 = "> Created: " + created;
-                        Check001Through004();
-                        break;
-                    case IrcNumerics.sRPL_MYINFO:
-                        var splt3 = splt2[2].Split(' ');
-                        _cachedIrcMessages.l004 = "> Servername: " + splt3[0] + Environment.NewLine + "> Version: " + splt3[1] + Environment.NewLine + "> Usermodes: " + splt3[2] + Environment.NewLine + "> Channel Modes: " + splt3[3];
-                        Check001Through004();
-                        break;
-                    case IrcNumerics.sRPL_MAP:
-                        StatusText("[ map ] " + splt2[2]);    
-                        break;
-                    case IrcNumerics.sRPL_MAPEND:
-                        StatusText("[ end of map ] " + splt2[2]);
-                        break;
-                    case IrcNumerics.sRPL_SNOMASK:
-                        StatusText("[ server notice mask ] " + splt2[2]);
-                        break;
-                    case IrcNumerics.sRPL_BOUNCE_2:
-                        StatusText("[ server recommends redirect ] " + splt2[2]);
-                        break;
-                    case IrcNumerics.sRPL_TRACEHANDSHAKE:
-                        splt3 = splt2[2].Split(' ');
-                        StatusText("[ trace handshake ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> server: " + splt3[2]);
-                        break;
-                    case IrcNumerics.sRPL_TRACEUNKNOWN:
-                        splt3 = splt2[2].Split(' ');
-                        StatusText("[ trace unknown ]  " +  Environment.NewLine + "> address: " + splt3[1] + Environment.NewLine + "> address: " + splt3[4]);
-                        break;
-                    case IrcNumerics.sRPL_TRACEOPERATOR:
-                        splt3 = splt2[2].Split(' ');
-                        StatusText("[ trace operator ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> nick: " + splt3[2]);
-                        break;
-                    case IrcNumerics.sRPL_TRACEUSER:
-                        splt3 = splt2[2].Split(' ');
-                        StatusText("[ trace user ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> nick: " + splt3[2]);
-                        break;
-                    case IrcNumerics.sRPL_TRACESERVER:
-                        splt3 = splt2[2].Split(' ');
-                        StatusText("[ trace server ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> server: " + splt3[4] + Environment.NewLine + "> nickandhost: " + splt3[5]  + Environment.NewLine + "> protocol version: " + splt3[6]);
-                        break;
-                    case IrcNumerics.sRPL_TRACESERVICE:
-                        splt3 = splt2[2].Split(' ');
-                        StatusText("[ trace service ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> name: " + splt3[2] + Environment.NewLine + "> type: " + splt3[3] + Environment.NewLine + "> active type: " + splt3[4]);
-                        break;
-                    default:
-                        if (splt2[2] != null) {
-                            if (!string.IsNullOrEmpty(splt2[2])) {
-                                StatusText(splt2[2]);
+                if (StringHelper.Left(data, 1) == ":") {
+                    var splt = data.Split(' ');
+                    var msg = "";
+                    if(StringHelper.Left(splt[3], 1) != ":") {
+                        splt[3] = ":" + splt[3];
+                        foreach(var item in splt) {
+                            if (msg.Length != 0) {
+                                msg = msg + " " + item;
+                            } else {
+                                msg = item;
                             }
                         }
-                        break;
+                    }
+                    var splt2 = msg.Split(':');
+                    int.TryParse(splt[1], out numeric);
+                    switch ((IrcNumerics)numeric) {
+                        case IrcNumerics.sNOTHING:
+                            // DO NOTHING
+                            break;
+                        case IrcNumerics.sRPL_WELCOME:
+                            _cachedIrcMessages.l001 = "[ login " + _settings.IrcServerInfoModel.Network + " ] welcome message: " + splt2[2];
+                            Check001Through004();
+                            break;
+                        case IrcNumerics.sRPL_YOURHOST:
+                            var host = (StringHelper.ParseData(splt2[2], "version ", StringHelper.Right(splt2[2], 2) + StringHelper.Right(splt2[2], 3))).Replace("host is", "");
+                            var version = (StringHelper.ParseData(splt2[2], "version ", StringHelper.Right(splt2[2], 2)) + StringHelper.Right(splt2[2], 3)).Replace("version", "");
+                            _cachedIrcMessages.l002 = "> host: " + host + Environment.NewLine + "> version: " + version;
+                            Check001Through004();
+                            break;
+                        case IrcNumerics.sRPL_CREATED:
+                            var created = StringHelper.ParseData(splt2[2], "created", StringHelper.Right(splt2[2], 1));
+                            _cachedIrcMessages.l003 = "> Created: " + created;
+                            Check001Through004();
+                            break;
+                        case IrcNumerics.sRPL_MYINFO:
+                            var splt3 = splt2[2].Split(' ');
+                            _cachedIrcMessages.l004 = "> Servername: " + splt3[0] + Environment.NewLine + "> Version: " + splt3[1] + Environment.NewLine + "> Usermodes: " + splt3[2] + Environment.NewLine + "> Channel Modes: " + splt3[3];
+                            Check001Through004();
+                            break;
+                        case IrcNumerics.sRPL_MAP:
+                            StatusText("[ map ] " + splt2[2]);
+                            break;
+                        case IrcNumerics.sRPL_MAPEND:
+                            StatusText("[ end of map ] " + splt2[2]);
+                            break;
+                        case IrcNumerics.sRPL_SNOMASK:
+                            StatusText("[ server notice mask ] " + splt2[2]);
+                            break;
+                        case IrcNumerics.sRPL_BOUNCE_2:
+                            StatusText("[ server recommends redirect ] " + splt2[2]);
+                            break;
+                        case IrcNumerics.sRPL_TRACEHANDSHAKE:
+                            splt3 = splt2[2].Split(' ');
+                            StatusText("[ trace handshake ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> server: " + splt3[2]);
+                            break;
+                        case IrcNumerics.sRPL_TRACEUNKNOWN:
+                            splt3 = splt2[2].Split(' ');
+                            StatusText("[ trace unknown ]  " + Environment.NewLine + "> address: " + splt3[1] + Environment.NewLine + "> address: " + splt3[4]);
+                            break;
+                        case IrcNumerics.sRPL_TRACEOPERATOR:
+                            splt3 = splt2[2].Split(' ');
+                            StatusText("[ trace operator ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> nick: " + splt3[2]);
+                            break;
+                        case IrcNumerics.sRPL_TRACEUSER:
+                            splt3 = splt2[2].Split(' ');
+                            StatusText("[ trace user ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> nick: " + splt3[2]);
+                            break;
+                        case IrcNumerics.sRPL_TRACESERVER:
+                            splt3 = splt2[2].Split(' ');
+                            StatusText("[ trace server ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> server: " + splt3[4] + Environment.NewLine + "> nickandhost: " + splt3[5] + Environment.NewLine + "> protocol version: " + splt3[6]);
+                            break;
+                        case IrcNumerics.sRPL_TRACESERVICE:
+                            splt3 = splt2[2].Split(' ');
+                            StatusText("[ trace service ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> name: " + splt3[2] + Environment.NewLine + "> type: " + splt3[3] + Environment.NewLine + "> active type: " + splt3[4]);
+                            break;
+                        case IrcNumerics.sRPL_TRACENEWTYPE:
+                            splt3 = splt2[2].Split(' ');
+                            StatusText("[ trace new type ] " + Environment.NewLine + "> new type: " + splt3[0] + Environment.NewLine + "> client name: " + splt3[1]);
+                            break;
+                        case IrcNumerics.sRPL_TRACECLASS:
+                            splt3 = splt2[2].Split(' ');
+                            StatusText("[ trace class ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> count: " + splt3[2]);
+                            break;
+                        case IrcNumerics.sRPL_STATSLINKINFO:
+                            splt3 = splt2[2].Split(' ');
+                            StatusText("[ status link info ] " + Environment.NewLine + "> link name: " + splt3[0] + Environment.NewLine + "> sendq: " + splt3[1] + Environment.NewLine + "> sent messages: " + splt3[2] + Environment.NewLine + "> sent bytes: " + splt3[3] + Environment.NewLine + "> recv msgs: " + splt3[4] + Environment.NewLine + "> recv bytes: " + splt3[5] + Environment.NewLine + "> time open: " + splt3[6]);
+                            break;
+                        default:
+                            if (splt2[2] != null) {
+                                if (!string.IsNullOrEmpty(splt2[2])) {
+                                    StatusText(splt2[2]);
+                                }
+                            }
+                            break;
+                    }
                 }
             } catch (Exception ex) {
                 throw ex;

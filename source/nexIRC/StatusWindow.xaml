@@ -25,6 +25,14 @@
                     <TextBox Name="txtOutgoing" HorizontalAlignment="Left" Height="79" TextWrapping="Wrap" Width="456" Background="Navy" />
                 </StackPanel>
             </phone:PivotItem>
+            <phone:PivotItem Name="Raw" Header="Raw">
+                <Grid>
+                    <StackPanel HorizontalAlignment="Left" Height="606" Width="456">
+                        <TextBox Name="txtRawIncoming" HorizontalAlignment="Left" Height="519" TextWrapping="Wrap" Width="456" Background="Navy" />
+                        <TextBox Name="txtRawOutgoing" HorizontalAlignment="Left" Height="79" TextWrapping="Wrap" Width="456" Background="Navy" />
+                    </StackPanel>
+                </Grid>
+            </phone:PivotItem>
             <phone:PivotItem Name="Channel1" Header="##channel">
                 <Grid>
                     <StackPanel HorizontalAlignment="Left" Height="606" Width="456">
