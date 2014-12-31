@@ -14,9 +14,9 @@ namespace nexIRC {
             try {
                 InitializeComponent();
                 DataContext = App.ViewModel;
-                btnSettings.MouseLeftButtonDown += btnSettings_MouseLeftButtonDown;
+                btnUser.MouseLeftButtonDown += btnUser_MouseLeftButtonDown;
             } catch (Exception ex) {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
             }
         }
         /// <summary>
@@ -24,12 +24,12 @@ namespace nexIRC {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void btnSettings_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+        void btnUser_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             try {
-                var status = new Customize(StatusHelper.CreateStatusWindow(StatusHelper.GetSettings().IrcServerInfoModel));
+                var status = new Customize();
                 this.Content = status;
             } catch (Exception ex) {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
             }
         }
         /// <summary>
@@ -42,7 +42,7 @@ namespace nexIRC {
                     App.ViewModel.LoadData();
                 }
             } catch (Exception ex) {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
             }
         }
         private void Panorama_Loaded(object sender, RoutedEventArgs e) {
@@ -60,7 +60,7 @@ namespace nexIRC {
                 var status = new StatusWindow(StatusHelper.CreateStatusWindow((IrcServerInfoModel)lstNetwork.SelectedItem));
                 this.Content = status;
             } catch (Exception ex) {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
             }
         }
     }

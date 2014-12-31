@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 namespace nexIRC.Infrustructure.Models {
+    /// <summary>
+    /// Irc Settings
+    /// </summary>
     public class IrcSettings {
         private string _nickname = "";
         private string _altNickname = "";
         private string _username = "";
         private string _password = "";
         private string _quitMessage = "";
+        /// <summary>
+        /// Entry Point
+        /// </summary>
         public IrcSettings() {
             try {
                 RawText = new List<string>();
@@ -14,6 +20,9 @@ namespace nexIRC.Infrustructure.Models {
                 throw ex;
             }
         }
+        /// <summary>
+        /// Nickname
+        /// </summary>
         public string Nickname {
             get {
                 if (!string.IsNullOrEmpty(_nickname)) {
@@ -26,6 +35,9 @@ namespace nexIRC.Infrustructure.Models {
                 _nickname = value;
             }
         }
+        /// <summary>
+        /// AltNickname
+        /// </summary>
         public string AltNickname { 
             get {
                 if (!string.IsNullOrEmpty(_altNickname)) {
@@ -38,6 +50,9 @@ namespace nexIRC.Infrustructure.Models {
                 _altNickname = value;
             }
         }
+        /// <summary>
+        /// Username
+        /// </summary>
         public string Username {
             get {
                 if (!string.IsNullOrEmpty(_username)) {
@@ -50,6 +65,9 @@ namespace nexIRC.Infrustructure.Models {
                 _username = value;
             }
         }
+        /// <summary>
+        /// Password
+        /// </summary>
         public string Password { 
             get {
                 if (!string.IsNullOrEmpty(_password)) {
@@ -62,6 +80,9 @@ namespace nexIRC.Infrustructure.Models {
                 _password = value;
             }
         }
+        /// <summary>
+        /// Quit Message
+        /// </summary>
         public string QuitMessage {
             get {
                 if (!string.IsNullOrEmpty(_quitMessage)) {
@@ -74,6 +95,10 @@ namespace nexIRC.Infrustructure.Models {
                 _quitMessage = value;
             }
         }
+        /// <summary>
+        /// Is Valid
+        /// </summary>
+        /// <returns></returns>
         public bool IsValid() {
             try {
                 if (string.IsNullOrEmpty(_nickname)) {
@@ -87,7 +112,13 @@ namespace nexIRC.Infrustructure.Models {
                 throw ex;
             }
         }
+        /// <summary>
+        /// Irc Server Info Model
+        /// </summary>
         public IrcServerInfoModel IrcServerInfoModel { get; set; }
+        /// <summary>
+        /// Raw Text
+        /// </summary>
         public List<string> RawText { get; set; }
     }
 }

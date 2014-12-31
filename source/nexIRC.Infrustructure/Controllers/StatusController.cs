@@ -182,6 +182,10 @@ namespace nexIRC.Infrustructure.Controllers {
                             splt3 = splt2[2].Split(' ');
                             StatusText("[ stats yline ] " + Environment.NewLine + "> class: " + splt3[1] + Environment.NewLine + "> ping: " + splt3[2] + Environment.NewLine + "> connect: " + splt3[3] + Environment.NewLine + "> sendq: " + splt3[4]);
                             break;
+                        case IrcNumerics.sRPL_ENDOFSTATS:
+                            splt3 = splt2[2].Split(' ');
+                            StatusText("");
+                            break;
                         default:
                             if (splt2[2] != null) {
                                 if (!string.IsNullOrEmpty(splt2[2])) {
@@ -215,7 +219,7 @@ namespace nexIRC.Infrustructure.Controllers {
         }
         public void Status_Command(string data) {
             try {
-                MessageBox.Show(data);
+                //MessageBox.Show(data);
             } catch (Exception ex) {
                 throw ex;
             }
@@ -223,7 +227,7 @@ namespace nexIRC.Infrustructure.Controllers {
         public void SendIdentity(IrcSettings settings) {
             try {
                 if (!settings.IsValid()) {
-                    MessageBox.Show("Error, Invalid Settings.");
+                    //MessageBox.Show("Error, Invalid Settings.");
                     return;
                 }
                 if (SendData != null) {

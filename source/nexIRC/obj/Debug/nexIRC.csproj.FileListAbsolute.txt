@@ -46,9 +46,6 @@ C:\dev\nexIRC_WP8.1\nexIRC\nexIRC\Bin\Debug\nexIRC.Infrustructure.dll
 C:\dev\nexIRC_WP8.1\nexIRC\nexIRC\Bin\Debug\nexIRC.Infrustructure.pdb
 C:\dev\team-nexgen\nexIRC-Windows-Phone\source\nexIRC\obj\Debug\nexIRC.csprojResolveAssemblyReference.cache
 C:\dev\team-nexgen\nexIRC-Windows-Phone\source\nexIRC\obj\Debug\App.g.cs
-C:\dev\team-nexgen\nexIRC-Windows-Phone\source\nexIRC\obj\Debug\Customize.g.cs
-C:\dev\team-nexgen\nexIRC-Windows-Phone\source\nexIRC\obj\Debug\MainPage.g.cs
-C:\dev\team-nexgen\nexIRC-Windows-Phone\source\nexIRC\obj\Debug\StatusWindow.g.cs
 C:\dev\team-nexgen\nexIRC-Windows-Phone\source\nexIRC\obj\Debug\nexIRC.g.resources
 C:\dev\team-nexgen\nexIRC-Windows-Phone\source\nexIRC\obj\Debug\nexIRC.Resources.AppResources.resources
 C:\dev\team-nexgen\nexIRC-Windows-Phone\source\nexIRC\obj\Debug\nexIRC.csproj.GenerateResource.Cache
@@ -91,3 +88,6 @@ C:\dev\team-nexgen\nexIRC-Windows-Phone\source\nexIRC\Bin\Debug\zh-Hant\System.W
 C:\dev\team-nexgen\nexIRC-Windows-Phone\source\nexIRC\obj\Debug\nexIRC.dll
 C:\dev\team-nexgen\nexIRC-Windows-Phone\source\nexIRC\obj\Debug\nexIRC.pdb
 C:\dev\team-nexgen\nexIRC-Windows-Phone\source\nexIRC\obj\Debug\XapCacheFile.xml
+C:\dev\team-nexgen\nexIRC-Windows-Phone\source\nexIRC\obj\Debug\frmMainPage.g.cs
+C:\dev\team-nexgen\nexIRC-Windows-Phone\source\nexIRC\obj\Debug\frmStatusWindow.g.cs
+C:\dev\team-nexgen\nexIRC-Windows-Phone\source\nexIRC\obj\Debug\frmUser.g.cs

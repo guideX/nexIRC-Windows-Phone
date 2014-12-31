@@ -43,7 +43,7 @@
                             <StackPanel Orientation="Horizontal" Margin="12,2,0,4" Height="105" Width="432">
                                 <!--Replace rectangle with image-->
                                 <Border BorderThickness="1" Width="99" Height="99" BorderBrush="#FFFFC700">
-                                    <Image Width="99" Height="99" Source="C:\dev\nexIRC_WP8.1\nexIRC\nexIRC\Assets\freenode.jpg" />
+                                    <Image Name="imgNetwork" Width="99" Height="99" Source="/nexIRC;component/Assets/freenode.jpg" />
                                 </Border>
                                 <StackPanel Width="311" Margin="8,-7,0,0">
                                     <TextBlock Text="{Binding Network}" TextWrapping="Wrap" Margin="10,0" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" />
@@ -59,17 +59,14 @@
                 <Grid>
                     <StackPanel Margin="0,4,16,0" Orientation="Vertical" VerticalAlignment="Top">
                         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                            <Border Name="btnSettings"  Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0">
-                                <TextBlock Name="tblCustomize" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30">Customize</TextBlock></Border>
-                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
-                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
-                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
+                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0" Name="btnServersAndNetworks"><TextBlock Name="tblServersAndNetworks" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30">Network</TextBlock></Border>
+                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0" Name="btnUser"><TextBlock Name="tblUser" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30">User</TextBlock></Border>
+                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0" Name="btnSettings"><TextBlock Name="tblSettings" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30">Settings</TextBlock></Border>
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,12,0,0">
-                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
-                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
-                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
-                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
+                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0" Name="btnText"><TextBlock Name="tblText" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30">Text</TextBlock></Border>
+                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0" Name="btnDcc"><TextBlock Name="tblDcc" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30">DCC</TextBlock></Border>
+                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0" Name="btnNotify"><TextBlock Name="tblNotify" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30">Notify</TextBlock></Border>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

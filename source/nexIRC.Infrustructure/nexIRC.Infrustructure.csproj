@@ -83,6 +83,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CommandController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SocketController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Helpers\StatusHelper.cs" />

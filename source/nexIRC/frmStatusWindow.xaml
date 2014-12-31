@@ -15,29 +15,29 @@
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Image Grid.RowSpan="2" Stretch="None" Source="/nexIRC;component/Assets/PanoramaBackground.png" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        <Image Grid.RowSpan="2" Stretch="None" VerticalAlignment="Top" HorizontalAlignment="Center" RenderTransformOrigin="0.332,0.5"/>
         <!--Pivot Control-->
         <phone:Pivot Name="pvtStatus" Title="nexIRC - (Not Initialized)">
             <!--Pivot item one-->
             <phone:PivotItem Name="Status" Header="Status">
                 <StackPanel HorizontalAlignment="Left" Height="606" Width="456">
-                    <TextBox Name="txtIncoming" HorizontalAlignment="Left" Height="519" TextWrapping="Wrap" Width="456" Background="Navy" />
-                    <TextBox Name="txtOutgoing" HorizontalAlignment="Left" Height="79" TextWrapping="Wrap" Width="456" Background="Navy" />
+                    <TextBox Name="txtIncoming" Height="519" TextWrapping="Wrap" Background="Navy" BorderThickness="0" Foreground="White" />
+                    <TextBox Name="txtOutgoing" HorizontalAlignment="Left" Height="79" TextWrapping="Wrap" Width="456" Background="Navy" BorderThickness="0" Foreground="White" />
                 </StackPanel>
             </phone:PivotItem>
             <phone:PivotItem Name="Raw" Header="Raw">
                 <Grid>
                     <StackPanel HorizontalAlignment="Left" Height="606" Width="456">
-                        <TextBox Name="txtRawIncoming" HorizontalAlignment="Left" Height="519" TextWrapping="Wrap" Width="456" Background="Navy" />
-                        <TextBox Name="txtRawOutgoing" HorizontalAlignment="Left" Height="79" TextWrapping="Wrap" Width="456" Background="Navy" />
+                        <TextBox Name="txtRawIncoming" HorizontalAlignment="Left" Height="519" TextWrapping="Wrap" Width="456" Background="Navy" BorderThickness="0" Foreground="White" />
+                        <TextBox Name="txtRawOutgoing" HorizontalAlignment="Left" Height="79" TextWrapping="Wrap" Width="456" Background="Navy" BorderThickness="0" Foreground="White" />
                     </StackPanel>
                 </Grid>
             </phone:PivotItem>
             <phone:PivotItem Name="Channel1" Header="##channel">
                 <Grid>
                     <StackPanel HorizontalAlignment="Left" Height="606" Width="456">
-                        <TextBox Name="txtChannel1Incoming" HorizontalAlignment="Left" Height="519" TextWrapping="Wrap" Width="456" Background="Navy" />
-                        <TextBox Name="txtChannel1Outgoing" HorizontalAlignment="Left" Height="79" TextWrapping="Wrap" Width="456" Background="Navy" />
+                        <TextBox Name="txtChannel1Incoming" HorizontalAlignment="Left" Height="519" TextWrapping="Wrap" Width="456" Background="Navy" BorderThickness="0" Foreground="White" />
+                        <TextBox Name="txtChannel1Outgoing" HorizontalAlignment="Left" Height="79" TextWrapping="Wrap" Width="456" Background="Navy" BorderThickness="0" Foreground="White" />
                     </StackPanel>
                 </Grid>
             </phone:PivotItem>

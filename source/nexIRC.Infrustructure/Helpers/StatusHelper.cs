@@ -2,6 +2,7 @@
 using nexIRC.Infrustructure.Models;
 using System;
 using System.Linq;
+using nexIRC.Infrustructure.Controllers;
 namespace nexIRC.Infrustructure.Helpers {
     public static class StatusHelper {
         /// <summary>
@@ -13,20 +14,9 @@ namespace nexIRC.Infrustructure.Helpers {
         /// </summary>
         /// <param name="ircServerInfoModel"></param>
         /// <returns></returns>
-        public static string QuitMessage = "nexIRC for Windows Phone team-nexgen.org";
-        public static string Nickname = "guide_X";
-        public static string Username = "guideX";
-        public static string Password = "";
-        public static string Server = "irc.freenode.org";
-        public static int Port = 6667;
-        public static string Network = "Freenode";
         public static IrcSettings CreateStatusWindow(IrcServerInfoModel ircServerInfoModel) {
             try {
-                var _settings = new IrcSettings();
-                _settings.QuitMessage = QuitMessage;
-                _settings.Nickname = Nickname;
-                _settings.Password = Password;
-                _settings.Username = Username;
+                var _settings = SettingsController.GetIrcSettings();
                 _settings.IrcServerInfoModel = new IrcServerInfoModel();
                 _settings.IrcServerInfoModel.Server = ircServerInfoModel.Server;
                 _settings.IrcServerInfoModel.Port = ircServerInfoModel.Port;
@@ -42,17 +32,7 @@ namespace nexIRC.Infrustructure.Helpers {
                 if (IrcSettings.Count != 0) {
                     return IrcSettings.Last();
                 } else {
-                    var s = new IrcSettings() {
-                        QuitMessage = QuitMessage,
-                        Nickname = Nickname,
-                        Password = Password,
-                        Username = Username,
-                        IrcServerInfoModel = new IrcServerInfoModel {
-                            Server = Server, 
-                            Network = Network,
-                            Port = Port
-                        }
-                    };
+                    var s = SettingsController.GetIrcSettings();
                     IrcSettings.Add(s);
                     return s;
                 }

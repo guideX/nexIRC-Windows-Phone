@@ -4,12 +4,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 namespace nexIRC.Infrustructure.Models {
     public class IrcServerInfoModel : INotifyPropertyChanged {
         public event PropertyChangedEventHandler PropertyChanged;
         private string _server;
         private int _port;
         private string _network;
+        private string _imagePath;
         /// <summary>
         /// Server
         /// </summary>
@@ -77,6 +79,33 @@ namespace nexIRC.Infrustructure.Models {
                     if (value != _network) {
                         _network = value;
                         NotifyPropertyChanged("Network");
+                    }
+                } catch (Exception ex) {
+                    throw ex;
+                }
+            }
+        }
+        /// <summary>
+        /// Image Path
+        /// </summary>
+        /// <returns></returns>
+        public string ImagePath {
+            get {
+                try {
+                    if (!string.IsNullOrEmpty(_imagePath)) {
+                        return _imagePath;
+                    } else {
+                        return "";
+                    }
+                } catch (Exception ex) {
+                    throw ex;
+                }
+            }
+            set {
+                try {
+                    if (value != _imagePath) {
+                        _imagePath = value;
+                        NotifyPropertyChanged("ImagePath");
                     }
                 } catch (Exception ex) {
                     throw ex;

@@ -20,7 +20,7 @@
                     <StackPanel Margin="8,-7,0,0">
                         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Nickname: " VerticalAlignment="Top"/>
                         <TextBox Name="txtNickname" HorizontalAlignment="Left" Height="72" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="448"/>
-                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Altnickname: " VerticalAlignment="Top"/>
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Alternate Nickname: " VerticalAlignment="Top"/>
                         <TextBox Name="txtAltNickname" HorizontalAlignment="Left" Height="72" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="448" Margin="0,0,-8,0"/>
                         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Username: " VerticalAlignment="Top"/>
                         <TextBox Name="txtUserName" HorizontalAlignment="Left" Height="72" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="448"/>
