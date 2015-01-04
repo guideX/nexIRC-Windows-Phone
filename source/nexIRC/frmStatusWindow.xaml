@@ -21,7 +21,7 @@
             <!--Pivot item one-->
             <phone:PivotItem Name="Status" Header="Status">
                 <StackPanel HorizontalAlignment="Left" Height="606" Width="456">
-                    <TextBox Name="txtIncoming" Height="519" TextWrapping="Wrap" Background="Navy" BorderThickness="0" Foreground="White" />
+                    <TextBox VerticalScrollBarVisibility="Auto" Name="txtIncoming" Height="519" TextWrapping="Wrap" Background="Navy" BorderThickness="0" Foreground="White" />
                     <TextBox Name="txtOutgoing" HorizontalAlignment="Left" Height="79" TextWrapping="Wrap" Width="456" Background="Navy" BorderThickness="0" Foreground="White" />
                 </StackPanel>
             </phone:PivotItem>

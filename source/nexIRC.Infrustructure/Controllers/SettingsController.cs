@@ -23,30 +23,41 @@ namespace nexIRC.Infrustructure.Controllers {
         public static IrcSettings GetIrcSettings() {
             try {
                 var model = new IrcSettings();
-                if (storageSettings["nickname"] != null && !string.IsNullOrEmpty(storageSettings["nickname"].ToString())) {
-                    model.Nickname = storageSettings["nickname"].ToString();
-                } else {
+                var b = false;
+                if (!IsolatedStorageSettings.ApplicationSettings.Contains("nickname")) {
                     model.Nickname = _nickname;
-                }
-                if (storageSettings["altnickname"] != null && !string.IsNullOrEmpty(storageSettings["altnickname"].ToString())) {
-                    model.AltNickname = storageSettings["altnickname"].ToString();
+                    IsolatedStorageSettings.ApplicationSettings["nickname"] = _nickname;
+                    b = true;
                 } else {
+                    model.Nickname = (string)IsolatedStorageSettings.ApplicationSettings["nickname"];
+                }
+                if (!IsolatedStorageSettings.ApplicationSettings.Contains("altnickname")) {
                     model.AltNickname = _altNickname;
-                }
-                if (storageSettings["password"] != null && !string.IsNullOrEmpty(storageSettings["password"].ToString())) {
-                    model.Password = storageSettings["password"].ToString();
+                    IsolatedStorageSettings.ApplicationSettings["altnickname"] = _nickname;
+                    b = true;
                 } else {
-                    model.Password  = _password;
+                    model.AltNickname = (string)IsolatedStorageSettings.ApplicationSettings["altnickname"];
                 }
-                if (storageSettings["username"] != null && !string.IsNullOrEmpty(storageSettings["username"].ToString())) {
-                    model.Username = storageSettings["username"].ToString();
+                if (!IsolatedStorageSettings.ApplicationSettings.Contains("password")) {
+                    model.Password = _password;
+                    IsolatedStorageSettings.ApplicationSettings["password"] = _password;
+                    b = true;
                 } else {
+                    model.Password = (string)IsolatedStorageSettings.ApplicationSettings["password"];
+                }
+                if (!IsolatedStorageSettings.ApplicationSettings.Contains("username")) {
                     model.Username = _username;
-                }
-                if (storageSettings["quitmessage"] != null && !string.IsNullOrEmpty(storageSettings["quitmessage"].ToString())) {
-                    model.QuitMessage = storageSettings["quitmessage"].ToString();
+                    IsolatedStorageSettings.ApplicationSettings["username"] = _username;
+                    b = true;
                 } else {
+                    model.Username = (string)IsolatedStorageSettings.ApplicationSettings["username"];
+                }
+                if (!IsolatedStorageSettings.ApplicationSettings.Contains("quitmessage")) {
                     model.QuitMessage = _quitMessage;
+                    IsolatedStorageSettings.ApplicationSettings["quitmessage"] = _quitMessage;
+                    b = true;
+                } else {
+                    model.QuitMessage = (string)IsolatedStorageSettings.ApplicationSettings["quitmessage"];
                 }
                 return model;
             } catch (Exception ex) {
@@ -59,12 +70,12 @@ namespace nexIRC.Infrustructure.Controllers {
         /// <param name="model"></param>
         public static void SaveIrcSettings(IrcSettings model) {
             try {
-                storageSettings["nickname"] = model.Nickname;
-                storageSettings["altnickname"] = model.AltNickname;
-                storageSettings["password"] = model.Password;
-                storageSettings["username"] = model.Username;
-                storageSettings["quitmessage"] = model.QuitMessage;
-                storageSettings.Save();
+                IsolatedStorageSettings.ApplicationSettings["nickname"] = model.Nickname;
+                IsolatedStorageSettings.ApplicationSettings["altnickname"] = model.AltNickname;
+                IsolatedStorageSettings.ApplicationSettings["password"] = model.Password;
+                IsolatedStorageSettings.ApplicationSettings["username"] = model.Username;
+                IsolatedStorageSettings.ApplicationSettings["quitmessage"] = model.QuitMessage;
+                IsolatedStorageSettings.ApplicationSettings.Save();
             } catch (Exception ex) {
                 throw ex;
             }
@@ -72,20 +83,29 @@ namespace nexIRC.Infrustructure.Controllers {
         /// <summary>
         /// Get Irc Info Model
         /// </summary>
-        public List<IrcServerInfoModel> GetIrcServerInfoModels() {
+        public static List<IrcServerInfoModel> GetIrcServerInfoModels() {
+            var models = new List<IrcServerInfoModel>();
+            var b = false;
             try {
-                var models = new List<IrcServerInfoModel>();
-                var saved = (List<IrcServerInfoModel>)storageSettings["servers"];
-                if (saved == null) {
-                    models.Add(new IrcServerInfoModel() { Server = "irc.freenode.org", Port = 6667, Network = "Freenode", ImagePath = "/Assets/freenode.jpg" });
+                var saved = (List<IrcServerInfoModel>)IsolatedStorageSettings.ApplicationSettings["servers"];
+                if (saved != null) {
+                    if (saved.Count != 0) {
+                        foreach (var item in saved) {
+                            models.Add(item);
+                            b = true;
+                        }
+                    }
+                }
+                if (!b) { 
+                    models.Add(new IrcServerInfoModel() { Server = "irc.freenode.org", Port = 6667, Network = "Freenode" });
+                    /*
                     models.Add(new IrcServerInfoModel() { Server = "us.undernet.org", Port = 6667, Network = "Undernet" });
                     models.Add(new IrcServerInfoModel() { Server = "irc.gamesurge.net", Port = 6667, Network = "GameSurge" });
                     models.Add(new IrcServerInfoModel() { Server = "irc.rizon.net", Port = 6667, Network = "Rizon" });
                     models.Add(new IrcServerInfoModel() { Server = "irc.dal.net", Port = 6667, Network = "DALnet" });
                     models.Add(new IrcServerInfoModel() { Server = "irc.quakenet.org", Port = 6667, Network = "Quakenet" });
                     models.Add(new IrcServerInfoModel() { Server = "irc.efnet.org", Port = 6667, Network = "EFnet" });
-                } else {
-                    models = saved;
+                    */
                 }
                 return models;
             } catch (Exception ex) {
@@ -96,7 +116,7 @@ namespace nexIRC.Infrustructure.Controllers {
         /// Save Irc Server Info Models
         /// </summary>
         /// <param name="models"></param>
-        public void SaveIrcServerInfoModels(List<IrcServerInfoModel> models) {
+        public static void SaveIrcServerInfoModels(List<IrcServerInfoModel> models) {
             try {
                 storageSettings["servers"] = models;
                 storageSettings.Save();

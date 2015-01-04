@@ -58,7 +58,7 @@ namespace nexIRC.Infrustructure.Models {
             if (!string.IsNullOrEmpty(data)) {
                 _controller.Status_DataArrival(data);
                 //if (DataArrival != null) {
-                    //DataArrival(data);
+                //DataArrival(data);
                 //}
             }
         }

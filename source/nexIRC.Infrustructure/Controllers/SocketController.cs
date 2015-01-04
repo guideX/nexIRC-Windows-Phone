@@ -7,6 +7,7 @@ using Windows.Networking;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 using nexIRC.Infrustructure.Models;
+using System.Windows;
 namespace nexIRC.Infrustructure.Controllers {
     public class SocketController {
         #region "events"
@@ -79,6 +80,7 @@ namespace nexIRC.Infrustructure.Controllers {
                 if (!string.IsNullOrEmpty(data)) {
                     if (DataArrival != null) {
                         DataArrival(data);
+                        //MessageBox.Show("INC: " + data);
                     }
                 }
                 ReadData();

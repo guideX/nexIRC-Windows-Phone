@@ -4,10 +4,6 @@ using System.Windows;
 namespace nexIRC.Infrustructure.Controllers {
     public class CommandController {
         public CommandController() {
-            try {
-            } catch (Exception ex) {
-                throw ex;
-            }
         }
         public void StatusCommand(string data) {
             try {
@@ -16,7 +12,7 @@ namespace nexIRC.Infrustructure.Controllers {
                     var command = splt.First().ToLower().Trim();
                     switch (command) {
                         case "test":
-                            //MessageBox.Show("BLAH!");
+                            MessageBox.Show("BLAH!");
                             break;
                     }
                 }

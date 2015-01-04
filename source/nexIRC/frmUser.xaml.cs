@@ -17,7 +17,7 @@ namespace nexIRC {
                 txtUserName.Text = _settings.Username;
                 cmdSave.Click += cmdSave_Click;
             } catch (Exception ex) {
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
         void cmdSave_Click(object sender, RoutedEventArgs e) {
@@ -30,7 +30,7 @@ namespace nexIRC {
                 SettingsController.SaveIrcSettings(_settings);
                 NavigationService.Navigate(new Uri("/frmMainPage.xaml", UriKind.Relative));
             } catch (Exception ex) {
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
     }

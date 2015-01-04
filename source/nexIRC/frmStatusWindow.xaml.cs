@@ -10,9 +10,11 @@ namespace nexIRC {
     /// Status Window
     /// </summary>
     public partial class StatusWindow : PhoneApplicationPage {
+        #region "private variables"
         private StatusModel _model;
         private StatusController _controller;
         private CommandController _commandController;
+        #endregion
         /// <summary>
         /// Status Window Entry Point
         /// </summary>
@@ -21,61 +23,101 @@ namespace nexIRC {
             try {
                 InitializeComponent();
                 pvtStatus.Title = settings.IrcServerInfoModel.Network;
+                txtIncoming.TextChanged += txtIncoming_TextChanged;
                 txtOutgoing.KeyUp += txtOutgoing_KeyUp;
+                txtRawIncoming.TextChanged += txtRawIncoming_TextChanged;
                 txtRawOutgoing.KeyUp += txtRawOutgoing_KeyUp;
                 _controller = new StatusController(settings);
+                _commandController = new CommandController();
                 _controller.OnDoStatusText += _controller_OnDoStatusText;
                 _controller.SendData += _controller_SendData;
                 _controller.RawEvt += _controller_RawEvt;
                 _controller.DisconnectedEvt += _controller_DisconnectedEvt;
-                _commandController = new CommandController();
+                _controller.OnStatusCaption += _controller_OnStatusCaption;
                 _model = new StatusModel(settings, _controller);
                 _model.Connect();
             } catch (Exception ex) {
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
+            }
+        }
+        /// <summary>
+        /// On Status Caption
+        /// </summary>
+        /// <param name="data"></param>
+        private void _controller_OnStatusCaption(string data) {
+            try {
+                this.Dispatcher.BeginInvoke(new Action(() => pvtStatus.Title = data ));
+            } catch (Exception ex) {
+                throw ex;
+            }
+        }
+        /// <summary>
+        /// Raw Incoming TextChanged
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtRawIncoming_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) {
+            try {
+                txtRawIncoming.SelectionStart = int.MaxValue;
+                txtRawIncoming.SelectionLength = 0;
+            } catch (Exception ex) {
+                throw ex;
+            }
+        }
+        /// <summary>
+        /// Incoming Text Changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtIncoming_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) {
+            try {
+                txtIncoming.SelectionStart = int.MaxValue;
+                txtIncoming.SelectionLength = 0;
+            } catch (Exception ex) {
+                throw ex;
             }
         }
         /// <summary>
         /// Raw Event
         /// </summary>
         /// <param name="data"></param>
-        void _controller_RawEvt(string data) {
+        private void _controller_RawEvt(string data) {
             try {
-                this.Dispatcher.BeginInvoke(new Action(() => txtRawIncoming.Text = txtRawIncoming.Text + Environment.NewLine + data));
+                TextBoxText(txtRawIncoming, data);
             } catch (Exception ex) {
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
         /// <summary>
         /// On Do Status Text
         /// </summary>
         /// <param name="data"></param>
-        void _controller_OnDoStatusText(string data) {
+        private void _controller_OnDoStatusText(string data) {
             try {
-                this.Dispatcher.BeginInvoke(new Action(() => txtIncoming.Text = txtIncoming.Text + Environment.NewLine + data));
+                 TextBoxText(txtIncoming, data);
             } catch (Exception ex) {
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
         /// <summary>
         /// On Disconnected Event
         /// </summary>
-        void _controller_DisconnectedEvt() {
+        private void _controller_DisconnectedEvt() {
             try {
-                _model.Socket.Close();
+                this.Dispatcher.BeginInvoke(new Action(() => _model.Socket.Close()));
             } catch (Exception ex) {
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
         /// <summary>
         /// SendData Event
         /// </summary>
         /// <param name="data"></param>
-        void _controller_SendData(string data) {
+        private void _controller_SendData(string data) {
             try {
-                _model.SendData(data);
+                this.Dispatcher.BeginInvoke(new Action(() => _model.SendData(data)));
             } catch (Exception ex) {
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
         /// <summary>
@@ -83,11 +125,11 @@ namespace nexIRC {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void txtOutgoing_KeyUp(object sender, System.Windows.Input.KeyEventArgs e) {
+        private void txtOutgoing_KeyUp(object sender, System.Windows.Input.KeyEventArgs e) {
             try {
                 TextBox_KeyUp(sender, e);                
             } catch (Exception ex) {
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
         /// <summary>
@@ -95,11 +137,11 @@ namespace nexIRC {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void txtRawOutgoing_KeyUp(object sender, System.Windows.Input.KeyEventArgs e) {
+        private void txtRawOutgoing_KeyUp(object sender, System.Windows.Input.KeyEventArgs e) {
             try {
                 TextBox_KeyUp(sender, e);
             } catch (Exception ex) {
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
         /// <summary>
@@ -120,7 +162,19 @@ namespace nexIRC {
                         break;
                 }
             } catch (Exception ex) {
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Add Text to a TextBox
+        /// </summary>
+        /// <param name="textBox"></param>
+        /// <param name="data"></param>
+        private void TextBoxText(System.Windows.Controls.TextBox textBox, string data) {
+            try {
+                this.Dispatcher.BeginInvoke(new Action(() => textBox.Text = textBox.Text + Environment.NewLine + data));
+            } catch (Exception ex) {
+                throw ex;
             }
         }
     }
