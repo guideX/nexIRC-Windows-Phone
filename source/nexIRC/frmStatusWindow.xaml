@@ -14,30 +14,31 @@
     shell:SystemTray.IsVisible="True">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
+    
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Image Grid.RowSpan="2" Stretch="None" VerticalAlignment="Top" HorizontalAlignment="Center" RenderTransformOrigin="0.332,0.5"/>
         <!--Pivot Control-->
         <phone:Pivot Name="pvtStatus" Title="nexIRC - (Not Initialized)">
             <!--Pivot item one-->
-            <phone:PivotItem Name="Status" Header="Status">
+            <phone:PivotItem Name="Status" Header="Status" Margin="0">
                 <StackPanel HorizontalAlignment="Left" Height="606" Width="456">
-                    <TextBox VerticalScrollBarVisibility="Auto" Name="txtIncoming" Height="519" TextWrapping="Wrap" Background="Navy" BorderThickness="0" Foreground="White" />
-                    <TextBox Name="txtOutgoing" HorizontalAlignment="Left" Height="79" TextWrapping="Wrap" Width="456" Background="Navy" BorderThickness="0" Foreground="White" />
+                    <TextBox VerticalScrollBarVisibility="Visible" Name="txtIncoming" Height="519" TextWrapping="Wrap" Background="Navy" BorderThickness="0" Foreground="White" SelectionForeground="Black" Padding="0" />
+                    <TextBox Name="txtOutgoing" HorizontalAlignment="Left" Height="79" TextWrapping="Wrap" Width="456" Background="Navy" BorderThickness="0" Foreground="White" SelectionForeground="Black" Padding="0" />
                 </StackPanel>
             </phone:PivotItem>
             <phone:PivotItem Name="Raw" Header="Raw">
                 <Grid>
                     <StackPanel HorizontalAlignment="Left" Height="606" Width="456">
-                        <TextBox Name="txtRawIncoming" HorizontalAlignment="Left" Height="519" TextWrapping="Wrap" Width="456" Background="Navy" BorderThickness="0" Foreground="White" />
-                        <TextBox Name="txtRawOutgoing" HorizontalAlignment="Left" Height="79" TextWrapping="Wrap" Width="456" Background="Navy" BorderThickness="0" Foreground="White" />
+                        <TextBox VerticalScrollBarVisibility="Visible" Name="txtRawIncoming" HorizontalAlignment="Left" Height="519" TextWrapping="Wrap" Width="456" Background="Navy" BorderThickness="0" Foreground="White" SelectionForeground="Black" Padding="0" />
+                        <TextBox Name="txtRawOutgoing" HorizontalAlignment="Left" Height="79" TextWrapping="Wrap" Width="456" Background="Navy" BorderThickness="0" Foreground="White" SelectionForeground="Black" Padding="0" />
                     </StackPanel>
                 </Grid>
             </phone:PivotItem>
             <phone:PivotItem Name="Channel1" Header="##channel">
                 <Grid>
                     <StackPanel HorizontalAlignment="Left" Height="606" Width="456">
-                        <TextBox Name="txtChannel1Incoming" HorizontalAlignment="Left" Height="519" TextWrapping="Wrap" Width="456" Background="Navy" BorderThickness="0" Foreground="White" />
-                        <TextBox Name="txtChannel1Outgoing" HorizontalAlignment="Left" Height="79" TextWrapping="Wrap" Width="456" Background="Navy" BorderThickness="0" Foreground="White" />
+                        <TextBox VerticalScrollBarVisibility="Visible" Name="txtChannel1Incoming" HorizontalAlignment="Left" Height="519" TextWrapping="Wrap" Width="456" Background="Navy" BorderThickness="0" Foreground="White" SelectionForeground="Black" Padding="0" />
+                        <TextBox Name="txtChannel1Outgoing" HorizontalAlignment="Left" Height="79" TextWrapping="Wrap" Width="456" Background="Navy" BorderThickness="0" Foreground="White" SelectionForeground="Black" Padding="0" />
                     </StackPanel>
                 </Grid>
             </phone:PivotItem>

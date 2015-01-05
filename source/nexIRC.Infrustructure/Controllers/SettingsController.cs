@@ -92,20 +92,26 @@ namespace nexIRC.Infrustructure.Controllers {
                     if (saved.Count != 0) {
                         foreach (var item in saved) {
                             models.Add(item);
-                            b = true;
+                            if (!b) { b = true; }
                         }
                     }
                 }
-                if (!b) { 
-                    models.Add(new IrcServerInfoModel() { Server = "irc.freenode.org", Port = 6667, Network = "Freenode" });
-                    /*
+            } catch {
+                // Do Nothing Special
+            }
+            try {
+                if (!b) {
+                    // Nothing existed in the record, add the defaults ;)
+                    models.Add(new IrcServerInfoModel() { Server = "irc.freenode.org", Port = 6667, Network = "Freenode", ImagePath = "/Assets/freenode.jpg" });
                     models.Add(new IrcServerInfoModel() { Server = "us.undernet.org", Port = 6667, Network = "Undernet" });
                     models.Add(new IrcServerInfoModel() { Server = "irc.gamesurge.net", Port = 6667, Network = "GameSurge" });
                     models.Add(new IrcServerInfoModel() { Server = "irc.rizon.net", Port = 6667, Network = "Rizon" });
                     models.Add(new IrcServerInfoModel() { Server = "irc.dal.net", Port = 6667, Network = "DALnet" });
                     models.Add(new IrcServerInfoModel() { Server = "irc.quakenet.org", Port = 6667, Network = "Quakenet" });
                     models.Add(new IrcServerInfoModel() { Server = "irc.efnet.org", Port = 6667, Network = "EFnet" });
-                    */
+                    // Start the record keeping process
+                    IsolatedStorageSettings.ApplicationSettings["servers"] = models;
+                    IsolatedStorageSettings.ApplicationSettings.Save();
                 }
                 return models;
             } catch (Exception ex) {
