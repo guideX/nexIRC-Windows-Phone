@@ -27,14 +27,84 @@ namespace nexIRC {
                 txtOutgoing.KeyUp += txtOutgoing_KeyUp;
                 txtRawIncoming.TextChanged += txtRawIncoming_TextChanged;
                 txtRawOutgoing.KeyUp += txtRawOutgoing_KeyUp;
-                _controller = new StatusController(settings);
+                cmdConnect.Click += cmdConnect_Click;
+                cmdDisconnect.Click += cmdDisconnect_Click;
+                cmdGoBack.Click += cmdGoBack_Click;
                 _commandController = new CommandController();
+                _controller = new StatusController(settings);
                 _controller.OnDoStatusText += _controller_OnDoStatusText;
                 _controller.SendData += _controller_SendData;
                 _controller.RawEvt += _controller_RawEvt;
                 _controller.DisconnectedEvt += _controller_DisconnectedEvt;
                 _controller.OnStatusCaption += _controller_OnStatusCaption;
                 _model = new StatusModel(settings, _controller);
+                _model.ConnectedEvent += _model_ConnectedEvent;
+                lblServer.Text = "Server: " + settings.IrcServerInfoModel.Server;
+                lblNickname.Text = "Nickname: " + settings.Nickname;
+                lblConnectionStatus.Text = "Connection Information: Not Connected";
+                //_model.Connect();
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// go back
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmdGoBack_Click(object sender, RoutedEventArgs e) {
+            try {
+
+            } catch (Exception ex) {
+                throw ex;
+            }
+        }
+        /// <summary>
+        /// Connected Event
+        /// </summary>
+        private void _model_ConnectedEvent() {
+            try {
+                this.Dispatcher.BeginInvoke(new Action(() => OnConnected() ));
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        /// <summary>
+        /// On Connected Void
+        /// </summary>
+        private void OnConnected() {
+            try {
+                cmdConnect.IsEnabled = false;
+                cmdDisconnect.IsEnabled = true;
+                lblConnectionStatus.Text = "Connection Information: Connected.";
+            } catch (Exception ex) {
+                throw ex;
+            }
+        }
+        /// <summary>
+        /// Disconnect Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmdDisconnect_Click(object sender, RoutedEventArgs e) {
+            try {
+                cmdConnect.IsEnabled = true;
+                cmdDisconnect.IsEnabled = false;
+                
+            } catch (Exception ex) {
+                throw ex;
+            }
+        }
+        /// <summary>
+        /// When connect button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmdConnect_Click(object sender, RoutedEventArgs e) {
+            try {
+                cmdConnect.IsEnabled = false;
+                lblConnectionStatus.Text = "Connection Information: Connecting to server ... ";
                 _model.Connect();
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
@@ -105,6 +175,8 @@ namespace nexIRC {
         private void _controller_DisconnectedEvt() {
             try {
                 this.Dispatcher.BeginInvoke(new Action(() => _model.Socket.Close()));
+                this.Dispatcher.BeginInvoke(new Action(() => cmdConnect.IsEnabled = true));
+                this.Dispatcher.BeginInvoke(new Action(() => cmdDisconnect.IsEnabled = false));
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }

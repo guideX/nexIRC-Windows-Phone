@@ -22,6 +22,8 @@ namespace nexIRC.Infrustructure.Controllers {
         /// </summary>
         public delegate void ConnectedEvent();
         public event ConnectedEvent ConnectedEvt;
+        public delegate void DisconnectedEvent();
+        //public event DisconnectedEvent DisconnectedEvt;
         #endregion
         #region "public properties"
         public bool Closing { get; set; }

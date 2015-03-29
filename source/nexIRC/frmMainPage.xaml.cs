@@ -5,6 +5,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using nexIRC.Infrustructure.Helpers;
 using nexIRC.Infrustructure.Models;
+using System.ComponentModel;
 namespace nexIRC {
     public partial class MainPage : PhoneApplicationPage {
         /// <summary>
@@ -64,6 +65,4 @@ namespace nexIRC {
             }
         }
     }
-} 
-
-
+}
