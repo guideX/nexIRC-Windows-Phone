@@ -18,7 +18,7 @@
             <ColumnDefinition Width="101*"/>
             <ColumnDefinition Width="139*"/>
         </Grid.ColumnDefinitions>
-        <phone:Panorama Title="nexIRC by Team Nexgen" HorizontalAlignment="Right" Width="480" Loaded="Panorama_Loaded" Grid.ColumnSpan="2">
+        <phone:Panorama Title="nexIRC by Team Nexgen" HorizontalAlignment="Right" Width="480" Loaded="Panorama_Loaded" Grid.ColumnSpan="2" Margin="0,2,0,-2">
             <phone:Panorama.Background>
                 <ImageBrush ImageSource="/nexIRC;component/Assets/PanoramaBackground.png"/>
             </phone:Panorama.Background>

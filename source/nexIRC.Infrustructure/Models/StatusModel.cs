@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using nexIRC.Infrustructure.Controllers;
 namespace nexIRC.Infrustructure.Models {
     public class StatusModel {
-        //public delegate void DataArrivalEvent(string data);
-        //public event DataArrivalEvent DataArrival;
+        public delegate void OnConnectedEvent();
+        public event OnConnectedEvent ConnectedEvent;
         public SocketController Socket { get; set; }
         private IrcSettings _settings { get; set; }
         private StatusController _controller;
@@ -24,11 +24,22 @@ namespace nexIRC.Infrustructure.Models {
                 Socket = new SocketController(settings.IrcServerInfoModel);
                 Socket.DataArrival += Socket_DataArrival;
                 Socket.ConnectedEvt += Socket_ConnectedEvt;
+                //Socket.DisconnectedEvt += Socket_DisconnectedEvt;
                 _controller.RawEvt += _controller_RawEvt;
             } catch (Exception ex) {
                 throw ex;
             }
         }
+        /// <summary>
+        /// Disconnect event for future implementation
+        /// </summary>
+        //private void Socket_DisconnectedEvt() {
+            //try {
+                // Doesn't work anyways
+            //} catch (Exception ex) {
+                //throw ex;
+            //}
+        //}
         /// <summary>
         /// Collect Raw Data
         /// </summary>
@@ -46,6 +57,9 @@ namespace nexIRC.Infrustructure.Models {
         void Socket_ConnectedEvt() {
             try {
                 _controller.SendIdentity(_settings);
+                if (ConnectedEvent != null) {
+                    ConnectedEvent();
+                }
             } catch (Exception ex) {
                 throw ex;
             }
