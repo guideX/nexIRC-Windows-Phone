@@ -37,7 +37,7 @@
                         <TextBlock Name="lblNickname" TextWrapping="Wrap" Text="Nickname: (Not Initialized)" FontWeight="Normal"/>
                         <TextBlock Name="lblConnectionStatus" TextWrapping="Wrap" Text="Connection Status: Not Connected" FontWeight="Normal"/>
                         <TextBlock></TextBlock>
-                        <Button IsEnabled="true" Name="cmdGoBack">Go Back</Button>
+                        <Button IsEnabled="true" Name="cmdGoBack" Click="cmdGoBack_Click">Go Back</Button>
                         <Button IsEnabled="true" Name="cmdConnect">Connect</Button>
                         <Button IsEnabled="false" Name="cmdDisconnect">Disconnect</Button>
                         <TextBlock></TextBlock>

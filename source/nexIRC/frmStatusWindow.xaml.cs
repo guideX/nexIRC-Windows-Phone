@@ -47,7 +47,9 @@ namespace nexIRC {
                 MessageBox.Show(ex.Message);
             }
         }
+        private void pvtStatus_Loaded(object sender, EventArgs e) {
 
+        }
         /// <summary>
         /// go back
         /// </summary>
@@ -55,7 +57,7 @@ namespace nexIRC {
         /// <param name="e"></param>
         private void cmdGoBack_Click(object sender, RoutedEventArgs e) {
             try {
-
+                ShowMainPage();
             } catch (Exception ex) {
                 throw ex;
             }
@@ -249,5 +251,11 @@ namespace nexIRC {
                 throw ex;
             }
         }
+        public void ShowMainPage() {
+            var mainPage = new MainPage();
+            this.Content = mainPage;
+        }
+
+
     }
 }
