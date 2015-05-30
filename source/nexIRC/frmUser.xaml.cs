@@ -28,7 +28,8 @@ namespace nexIRC {
                 _settings.Username = txtUserName.Text;
                 _settings.QuitMessage = txtQuitMessage.Text;
                 SettingsController.SaveIrcSettings(_settings);
-                NavigationService.Navigate(new Uri("/frmMainPage.xaml", UriKind.Relative));
+                var mainPage = new MainPage();
+                this.Content = mainPage;
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
