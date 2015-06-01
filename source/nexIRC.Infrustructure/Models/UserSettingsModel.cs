@@ -4,7 +4,15 @@ namespace nexIRC.Infrustructure.Models {
     /// <summary>
     /// Irc Settings
     /// </summary>
-    public class IrcSettings {
+    public class UserSettingsModel {
+        /// <summary>
+        /// Irc Server Info Model
+        /// </summary>
+        //public IrcServerInfoModel IrcServerInfoModel { get; set; }
+        /// <summary>
+        /// Raw Text
+        /// </summary>
+        public List<string> RawText { get; set; }        
         private string _nickname = "";
         private string _altNickname = "";
         private string _username = "";
@@ -13,7 +21,7 @@ namespace nexIRC.Infrustructure.Models {
         /// <summary>
         /// Entry Point
         /// </summary>
-        public IrcSettings() {
+        public UserSettingsModel() {
             try {
                 RawText = new List<string>();
             } catch (Exception ex) {
@@ -112,13 +120,5 @@ namespace nexIRC.Infrustructure.Models {
                 throw ex;
             }
         }
-        /// <summary>
-        /// Irc Server Info Model
-        /// </summary>
-        public IrcServerInfoModel IrcServerInfoModel { get; set; }
-        /// <summary>
-        /// Raw Text
-        /// </summary>
-        public List<string> RawText { get; set; }
     }
 }

@@ -6,23 +6,23 @@ using System.Text;
 using System.Threading.Tasks;
 using nexIRC.Infrustructure.Models;
 namespace nexIRC.Infrustructure.Controllers {
-    public static class SettingsController {
+    public static class UserSettingsController {
         private static IsolatedStorageSettings storageSettings = IsolatedStorageSettings.ApplicationSettings;
         private static string _quitMessage = "nexIRC for Windows Phone team-nexgen.org";
         private static string _nickname = "guide_X";
         private static string _altNickname = "guide__X";
         private static string _username = "guideX";
         private static string _password = "";
-        private static string _server = "irc.freenode.org";
-        private static int _port = 6667;
-        private static string _network = "Freenode";
+        //private static string _server = "irc.freenode.org";
+        //private static int _port = 6667;
+        //private static string _network = "Freenode";
         /// <summary>
         /// Get Irc Settings
         /// </summary>
         /// <returns></returns>
-        public static IrcSettings GetIrcSettings() {
+        public static UserSettingsModel GetUserSettings() {
             try {
-                var model = new IrcSettings();
+                var model = new UserSettingsModel();
                 var b = false;
                 if (!IsolatedStorageSettings.ApplicationSettings.Contains("nickname")) {
                     model.Nickname = _nickname;
@@ -68,7 +68,7 @@ namespace nexIRC.Infrustructure.Controllers {
         /// Save Irc Settings
         /// </summary>
         /// <param name="model"></param>
-        public static void SaveIrcSettings(IrcSettings model) {
+        public static void SaveUserSettings(UserSettingsModel model) {
             try {
                 IsolatedStorageSettings.ApplicationSettings["nickname"] = model.Nickname;
                 IsolatedStorageSettings.ApplicationSettings["altnickname"] = model.AltNickname;

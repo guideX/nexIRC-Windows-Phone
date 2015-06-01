@@ -35,15 +35,15 @@ namespace nexIRC.Infrustructure.Controllers {
         public event DisconnectedEvent DisconnectedEvt;
         #endregion
         #region "private variables"
-        private IrcSettings _settings;
+        //private UserSettingsModel _userSettings;
         private CachedIrcMessages _cachedIrcMessages = new CachedIrcMessages();
         #endregion
         /// <summary>
         /// Entry Point
         /// </summary>
         /// <param name="settings"></param>
-        public StatusController(IrcSettings settings) {
-            _settings = settings;
+        public StatusController() {
+            //_userSettings = settings;
         }
         /// <summary>
         /// On Do Status Text
@@ -64,9 +64,9 @@ namespace nexIRC.Infrustructure.Controllers {
                 try {
                     if (!string.IsNullOrEmpty(dataItem)) {
                         currentDataItem = dataItem;
-                        if (currentDataItem == ":wolfe.freenode.net 372 guide") {
-                            var mm = "";
-                        }
+                        //if (currentDataItem == ":wolfe.freenode.net 372 guide") {
+                            //var mm = "";
+                        //}
                         var numeric = 0;
                         RawEvt(dataItem);
                         if (StringHelper.Left(dataItem, 7) == "version") {
@@ -224,7 +224,8 @@ namespace nexIRC.Infrustructure.Controllers {
                                 var splt3 = splt2[2].Split(' ');
                                 switch ((IrcNumerics)numeric) {
                                     case IrcNumerics.sRPL_WELCOME:
-                                        _cachedIrcMessages.l001 = "[ login " + _settings.IrcServerInfoModel.Network + " ] welcome message: " + splt2[2];
+                                        //_cachedIrcMessages.l001 = "[ login " + _userSettings.IrcServerInfoModel.Network + " ] welcome message: " + splt2[2];
+                                        _cachedIrcMessages.l001 = "[ login ] welcome message: " + splt2[2];
                                         Check001Through004();
                                         break;
                                     case IrcNumerics.sRPL_YOURHOST:
@@ -373,7 +374,7 @@ namespace nexIRC.Infrustructure.Controllers {
                 throw ex;
             }
         }
-        public void SendIdentity(IrcSettings settings) {
+        public void SendIdentity(UserSettingsModel settings) {
             try {
                 if (!settings.IsValid()) {
                     MessageBox.Show("Error, Invalid Settings.");

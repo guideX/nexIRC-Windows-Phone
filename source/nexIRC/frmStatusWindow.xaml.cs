@@ -11,44 +11,45 @@ namespace nexIRC {
     /// </summary>
     public partial class StatusWindow : PhoneApplicationPage {
         #region "private variables"
-        private StatusModel _model;
-        private StatusController _controller;
-        private CommandController _commandController;
+        private int _statusIndex;
+        private GlobalObject _obj;
         #endregion
         /// <summary>
         /// Status Window Entry Point
         /// </summary>
         /// <param name="settings"></param>
-        public StatusWindow(IrcSettings settings) {
+        public StatusWindow(GlobalObject obj, IrcServerInfoModel ircInfo) {
             try {
                 InitializeComponent();
-                pvtStatus.Title = settings.IrcServerInfoModel.Network;
-                txtIncoming.TextChanged += txtIncoming_TextChanged;
-                txtOutgoing.KeyUp += txtOutgoing_KeyUp;
-                txtRawIncoming.TextChanged += txtRawIncoming_TextChanged;
-                txtRawOutgoing.KeyUp += txtRawOutgoing_KeyUp;
-                cmdConnect.Click += cmdConnect_Click;
-                cmdDisconnect.Click += cmdDisconnect_Click;
-                cmdGoBack.Click += cmdGoBack_Click;
-                _commandController = new CommandController();
-                _controller = new StatusController(settings);
-                _controller.OnDoStatusText += _controller_OnDoStatusText;
-                _controller.SendData += _controller_SendData;
-                _controller.RawEvt += _controller_RawEvt;
-                _controller.DisconnectedEvt += _controller_DisconnectedEvt;
-                _controller.OnStatusCaption += _controller_OnStatusCaption;
-                _model = new StatusModel(settings, _controller);
-                _model.ConnectedEvent += _model_ConnectedEvent;
-                lblServer.Text = "Server: " + settings.IrcServerInfoModel.Server;
-                lblNickname.Text = "Nickname: " + settings.Nickname;
+                var userSettings = UserSettingsController.GetUserSettings();
+                if (obj == null) {
+                    _obj = new GlobalObject();
+                } else {
+                    _obj = obj;
+                }
+                _statusIndex = _obj.GetId(userSettings, ircInfo);
+                if (_statusIndex == -1) {
+                    _statusIndex = _obj.Create(userSettings, ircInfo);
+                }
+                pvtStatus.Title = ircInfo.Network;
+                WindUp();
+                lblServer.Text = "Server: " + ircInfo.Server;
+                lblNickname.Text = "Nickname: " + userSettings.Nickname;
                 lblConnectionStatus.Text = "Connection Information: Not Connected";
-                //_model.Connect();
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
         }
-        private void pvtStatus_Loaded(object sender, EventArgs e) {
+        private void cmdConnect_Click_1(object sender, EventArgs e) {
 
+        }
+        void _obj_ConnectedEvent(int id) {
+            if (_statusIndex == id) {
+                this.Dispatcher.BeginInvoke(new Action(() => cmdConnect.IsEnabled = false));
+                this.Dispatcher.BeginInvoke(new Action(() => cmdDisconnect.IsEnabled = true));
+            }
+        }
+        private void pvtStatus_Loaded(object sender, EventArgs e) {
         }
         /// <summary>
         /// go back
@@ -57,7 +58,9 @@ namespace nexIRC {
         /// <param name="e"></param>
         private void cmdGoBack_Click(object sender, RoutedEventArgs e) {
             try {
-                ShowMainPage();
+                var mainPage = new MainPage();
+                mainPage.Obj = _obj;
+                this.Content = mainPage;
             } catch (Exception ex) {
                 throw ex;
             }
@@ -93,7 +96,6 @@ namespace nexIRC {
             try {
                 cmdConnect.IsEnabled = true;
                 cmdDisconnect.IsEnabled = false;
-                
             } catch (Exception ex) {
                 throw ex;
             }
@@ -107,7 +109,7 @@ namespace nexIRC {
             try {
                 cmdConnect.IsEnabled = false;
                 lblConnectionStatus.Text = "Connection Information: Connecting to server ... ";
-                _model.Connect();
+                _obj.Connect(_statusIndex);
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
@@ -176,7 +178,7 @@ namespace nexIRC {
         /// </summary>
         private void _controller_DisconnectedEvt() {
             try {
-                this.Dispatcher.BeginInvoke(new Action(() => _model.Socket.Close()));
+                this.Dispatcher.BeginInvoke(new Action(() => _obj.Disconnect(_statusIndex)));
                 this.Dispatcher.BeginInvoke(new Action(() => cmdConnect.IsEnabled = true));
                 this.Dispatcher.BeginInvoke(new Action(() => cmdDisconnect.IsEnabled = false));
             } catch (Exception ex) {
@@ -189,7 +191,7 @@ namespace nexIRC {
         /// <param name="data"></param>
         private void _controller_SendData(string data) {
             try {
-                this.Dispatcher.BeginInvoke(new Action(() => _model.SendData(data)));
+                this.Dispatcher.BeginInvoke(new Action(() => _obj.SendData(_statusIndex, data)));
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
@@ -230,7 +232,7 @@ namespace nexIRC {
                         if (txtOutgoing.Text.Length != 0) {
                             var msg = txtOutgoing.Text.Remove(0, 1);
                             txtOutgoing.Text = "";
-                            _commandController.StatusCommand(msg);
+                            _obj.CommandController(_statusIndex).StatusCommand(msg);
                             e.Handled = true;
                         }
                         break;
@@ -251,11 +253,32 @@ namespace nexIRC {
                 throw ex;
             }
         }
-        public void ShowMainPage() {
-            var mainPage = new MainPage();
-            this.Content = mainPage;
+        //public void ShowMainPage() {
+            //var mainPage = new MainPage();
+            //mainPage.Obj = _obj;
+            //this.Content = mainPage;
+        //}
+        /// <summary>
+        /// Wind Up
+        /// </summary>
+        private void WindUp() {
+            try {
+                txtIncoming.TextChanged += txtIncoming_TextChanged;
+                txtOutgoing.KeyUp += txtOutgoing_KeyUp;
+                txtRawIncoming.TextChanged += txtRawIncoming_TextChanged;
+                txtRawOutgoing.KeyUp += txtRawOutgoing_KeyUp;
+                cmdConnect.Click += cmdConnect_Click;
+                cmdDisconnect.Click += cmdDisconnect_Click;
+                cmdGoBack.Click += cmdGoBack_Click;
+                _obj.Controller(_statusIndex).OnDoStatusText += _controller_OnDoStatusText;
+                _obj.Controller(_statusIndex).SendData += _controller_SendData;
+                _obj.Controller(_statusIndex).RawEvt += _controller_RawEvt;
+                _obj.Controller(_statusIndex).DisconnectedEvt += _controller_DisconnectedEvt;
+                _obj.Controller(_statusIndex).OnStatusCaption += _controller_OnStatusCaption;
+                _obj.ConnectedEvent += _obj_ConnectedEvent;
+            } catch (Exception ex) {
+                throw ex;
+            }
         }
-
-
     }
 }

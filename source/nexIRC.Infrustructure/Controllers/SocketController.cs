@@ -31,7 +31,7 @@ namespace nexIRC.Infrustructure.Controllers {
         public bool Connected { get; set; }
         #endregion
         #region "private properties"
-        private IrcServerInfoModel _settings { get; set; }
+        //private IrcServerInfoModel _settings { get; set; }
         private readonly StreamSocket _clientSocket;
         private DataReader _dataReader;
         #endregion
@@ -39,11 +39,12 @@ namespace nexIRC.Infrustructure.Controllers {
         /// Entry Point (requires settings)
         /// </summary>
         /// <param name="settings"></param>
-        public SocketController(IrcServerInfoModel settings) {
+        //public SocketController(IrcServerInfoModel settings) {
+        public SocketController() {
             try {
                 Connecting = true;
                 _clientSocket = new StreamSocket();
-                _settings = settings;
+                //_settings = settings;
             } catch (Exception ex) {
                 throw ex;
             }
@@ -52,11 +53,11 @@ namespace nexIRC.Infrustructure.Controllers {
         /// Connect Function
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> Connect() {
+        public async Task<bool> Connect(string server, string port) {
             try {
                 if (Connected) return false;
-                var hostname = new HostName(_settings.Server);
-                await _clientSocket.ConnectAsync(hostname, _settings.Port.ToString());
+                var hostname = new HostName(server);
+                await _clientSocket.ConnectAsync(hostname, port);
                 Connected = true;
                 if (ConnectedEvt != null) {
                     ConnectedEvt();
@@ -82,7 +83,6 @@ namespace nexIRC.Infrustructure.Controllers {
                 if (!string.IsNullOrEmpty(data)) {
                     if (DataArrival != null) {
                         DataArrival(data);
-                        //MessageBox.Show("INC: " + data);
                     }
                 }
                 ReadData();

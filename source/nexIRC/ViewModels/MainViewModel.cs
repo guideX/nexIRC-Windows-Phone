@@ -13,14 +13,7 @@ namespace nexIRC.ViewModels {
         }
         public bool IsDataLoaded { get; private set; }
         public void LoadData() {
-            //this.Items.Add(new IrcServerInfoModel() { Server = "irc.freenode.org", Port = 6667, Network = "Freenode", ImagePath = "/Assets/freenode.jpg" });
-            //this.Items.Add(new IrcServerInfoModel() { Server = "us.undernet.org", Port = 6667, Network = "Undernet" });
-            //this.Items.Add(new IrcServerInfoModel() { Server = "irc.gamesurge.net", Port = 6667, Network = "GameSurge" });
-            //this.Items.Add(new IrcServerInfoModel() { Server = "irc.rizon.net", Port = 6667, Network = "Rizon" });
-            //this.Items.Add(new IrcServerInfoModel() { Server = "irc.dal.net", Port = 6667, Network = "DALnet" });
-            //this.Items.Add(new IrcServerInfoModel() { Server = "irc.quakenet.org", Port = 6667, Network = "Quakenet" });
-            //this.Items.Add(new IrcServerInfoModel() { Server = "irc.efnet.org", Port = 6667, Network = "EFnet" });
-            foreach (var item in SettingsController.GetIrcServerInfoModels()) {
+            foreach (var item in UserSettingsController.GetIrcServerInfoModels()) {
                 this.Items.Add(item);
             }
             this.IsDataLoaded = true;

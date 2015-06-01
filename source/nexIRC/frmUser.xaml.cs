@@ -5,16 +5,22 @@ using nexIRC.Infrustructure.Controllers;
 using nexIRC.Infrustructure.Models;
 namespace nexIRC {
     public partial class Customize : PhoneApplicationPage {
-        private IrcSettings _settings;
-        public Customize() {
+        private UserSettingsModel _userSettings;
+        private GlobalObject _obj;
+        public Customize(GlobalObject obj) {
             try {
+                if (obj == null) {
+                    _obj = new GlobalObject();
+                } else {
+                    _obj = obj;
+                }
                 InitializeComponent();
-                _settings = SettingsController.GetIrcSettings();
-                txtNickname.Text = _settings.Nickname;
-                txtAltNickname.Text = _settings.AltNickname;
-                txtPassword.Text = _settings.Password;
-                txtQuitMessage.Text = _settings.QuitMessage;
-                txtUserName.Text = _settings.Username;
+                _userSettings = UserSettingsController.GetUserSettings();
+                txtNickname.Text = _userSettings.Nickname;
+                txtAltNickname.Text = _userSettings.AltNickname;
+                txtPassword.Text = _userSettings.Password;
+                txtQuitMessage.Text = _userSettings.QuitMessage;
+                txtUserName.Text = _userSettings.Username;
                 cmdSave.Click += cmdSave_Click;
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
@@ -22,13 +28,14 @@ namespace nexIRC {
         }
         void cmdSave_Click(object sender, RoutedEventArgs e) {
             try {
-                _settings.Nickname = txtNickname.Text;
-                _settings.AltNickname = txtAltNickname.Text;
-                _settings.Password = txtPassword.Text;
-                _settings.Username = txtUserName.Text;
-                _settings.QuitMessage = txtQuitMessage.Text;
-                SettingsController.SaveIrcSettings(_settings);
+                _userSettings.Nickname = txtNickname.Text;
+                _userSettings.AltNickname = txtAltNickname.Text;
+                _userSettings.Password = txtPassword.Text;
+                _userSettings.Username = txtUserName.Text;
+                _userSettings.QuitMessage = txtQuitMessage.Text;
+                UserSettingsController.SaveUserSettings(_userSettings);
                 var mainPage = new MainPage();
+                mainPage.Obj = _obj;
                 this.Content = mainPage;
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);

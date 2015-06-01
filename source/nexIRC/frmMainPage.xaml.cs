@@ -6,13 +6,21 @@ using Microsoft.Phone.Controls;
 using nexIRC.Infrustructure.Helpers;
 using nexIRC.Infrustructure.Models;
 using System.ComponentModel;
+using nexIRC.Infrustructure.Controllers;
 namespace nexIRC {
     public partial class MainPage : PhoneApplicationPage {
+        private GlobalObject _obj;
         /// <summary>
         /// Main Page Entry Point
         /// </summary>
+        public GlobalObject Obj {
+            set {
+                _obj = value;
+            }
+        }
         public MainPage() {
             try {
+                _obj = new GlobalObject();
                 InitializeComponent();
                 DataContext = App.ViewModel;
                 btnUser.MouseLeftButtonDown += btnUser_MouseLeftButtonDown;
@@ -27,7 +35,7 @@ namespace nexIRC {
         /// <param name="e"></param>
         void btnUser_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             try {
-                var status = new Customize();
+                var status = new Customize(_obj);
                 this.Content = status;
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
@@ -55,11 +63,8 @@ namespace nexIRC {
         /// <param name="e"></param>
         private void lstNetwork_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             try {
-                if (lstNetwork.SelectedItem == null) {
-                    return;
-                }
-                var status = new StatusWindow(StatusHelper.CreateStatusWindow((IrcServerInfoModel)lstNetwork.SelectedItem));
-                this.Content = status;
+                if (lstNetwork.SelectedItem == null) { return; }
+                this.Content = new StatusWindow(_obj, (IrcServerInfoModel)lstNetwork.SelectedItem);
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }

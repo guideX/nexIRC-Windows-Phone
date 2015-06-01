@@ -84,14 +84,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controllers\CommandController.cs" />
-    <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\UserSettingsController.cs" />
     <Compile Include="Controllers\SocketController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
-    <Compile Include="Helpers\StatusHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Models\GlobalObject.cs" />
     <Compile Include="Models\IrcServerInfoModel.cs" />
-    <Compile Include="Models\IrcSettingsModel.cs" />
-    <Compile Include="Models\StatusModel.cs" />
+    <Compile Include="Models\UserSettingsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Structures\IrcNumerics.cs" />
   </ItemGroup>

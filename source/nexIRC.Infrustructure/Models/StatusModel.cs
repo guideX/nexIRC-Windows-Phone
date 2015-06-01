@@ -5,27 +5,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using nexIRC.Infrustructure.Controllers;
+/*
 namespace nexIRC.Infrustructure.Models {
     public class StatusModel {
         public delegate void OnConnectedEvent();
         public event OnConnectedEvent ConnectedEvent;
         public SocketController Socket { get; set; }
-        private IrcSettings _settings { get; set; }
-        private StatusController _controller;
+        //private UserSettingsModel _userSettings { get; set; }
+        //private StatusController _controller;
         /// <summary>
         /// Status Model Entry Point
         /// </summary>
         /// <param name="settings"></param>
         /// <param name="controller"></param>
-        public StatusModel(IrcSettings settings, StatusController controller) {
+        public StatusModel(UserSettingsModel userSettings, StatusController controller) {
             try {
-                _controller = controller;
-                _settings = settings;
-                Socket = new SocketController(settings.IrcServerInfoModel);
+                //_controller = controller;
+                //_userSettings = userSettings;
+                //Socket = new SocketController(_userSettings.IrcServerInfoModel);
+                Socket = new SocketController();
                 Socket.DataArrival += Socket_DataArrival;
                 Socket.ConnectedEvt += Socket_ConnectedEvt;
                 //Socket.DisconnectedEvt += Socket_DisconnectedEvt;
-                _controller.RawEvt += _controller_RawEvt;
+                //_controller.RawEvt += _controller_RawEvt;
             } catch (Exception ex) {
                 throw ex;
             }
@@ -44,19 +46,12 @@ namespace nexIRC.Infrustructure.Models {
         /// Collect Raw Data
         /// </summary>
         /// <param name="data"></param>
-        void _controller_RawEvt(string data) {
-            try {
-                _settings.RawText.Add(data);
-            } catch (Exception ex) {
-                throw ex;
-            }
-        }
         /// <summary>
         /// Connected Event
         /// </summary>
         void Socket_ConnectedEvt() {
             try {
-                _controller.SendIdentity(_settings);
+                _controller.SendIdentity(_userSettings);
                 if (ConnectedEvent != null) {
                     ConnectedEvent();
                 }
@@ -100,3 +95,4 @@ namespace nexIRC.Infrustructure.Models {
         }
     }
 }
+*/
