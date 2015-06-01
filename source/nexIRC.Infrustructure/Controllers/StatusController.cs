@@ -23,8 +23,8 @@ namespace nexIRC.Infrustructure.Controllers {
         #region "events"
         public delegate void StatusServerName(string data);
         public event StatusServerName OnStatusServerName;
-        public delegate void StatusCaption(string data);
-        public event StatusCaption OnStatusCaption;
+        //public delegate void StatusCaption(string data);
+        //public event StatusCaption OnStatusCaption;
         public delegate void DoStatusText(string data);
         public event DoStatusText OnDoStatusText;
         public delegate void SendDataEvent(string data);
@@ -35,15 +35,12 @@ namespace nexIRC.Infrustructure.Controllers {
         public event DisconnectedEvent DisconnectedEvt;
         #endregion
         #region "private variables"
-        //private UserSettingsModel _userSettings;
-        private CachedIrcMessages _cachedIrcMessages = new CachedIrcMessages();
         #endregion
         /// <summary>
         /// Entry Point
         /// </summary>
         /// <param name="settings"></param>
         public StatusController() {
-            //_userSettings = settings;
         }
         /// <summary>
         /// On Do Status Text
@@ -58,7 +55,7 @@ namespace nexIRC.Infrustructure.Controllers {
         /// Data Arrival (parsing function)
         /// </summary>
         /// <param name="data"></param>
-        public void Status_DataArrival(string data) {
+        public void Status_DataArrival(string data, CachedIrcMessages _cachedIrcMessages) {
             string currentDataItem = "";
             foreach (var dataItem in data.Split(Environment.NewLine.ToCharArray())) {
                 try {
@@ -226,23 +223,23 @@ namespace nexIRC.Infrustructure.Controllers {
                                     case IrcNumerics.sRPL_WELCOME:
                                         //_cachedIrcMessages.l001 = "[ login " + _userSettings.IrcServerInfoModel.Network + " ] welcome message: " + splt2[2];
                                         _cachedIrcMessages.l001 = "[ login ] welcome message: " + splt2[2];
-                                        Check001Through004();
+                                        Check001Through004(_cachedIrcMessages);
                                         break;
                                     case IrcNumerics.sRPL_YOURHOST:
                                         var host = (StringHelper.ParseData(splt2[2], "version ", StringHelper.Right(splt2[2], 2) + StringHelper.Right(splt2[2], 3))).Replace("host is", "");
                                         var version = (StringHelper.ParseData(splt2[2], "version ", StringHelper.Right(splt2[2], 2)) + StringHelper.Right(splt2[2], 3)).Replace("version", "");
                                         _cachedIrcMessages.l002 = "> host: " + host + Environment.NewLine + "> version: " + version;
-                                        Check001Through004();
+                                        Check001Through004(_cachedIrcMessages);
                                         break;
                                     case IrcNumerics.sRPL_CREATED:
                                         var created = StringHelper.ParseData(splt2[2], "created", StringHelper.Right(splt2[2], 1));
                                         _cachedIrcMessages.l003 = "> Created: " + created;
-                                        Check001Through004();
+                                        Check001Through004(_cachedIrcMessages);
                                         break;
                                     case IrcNumerics.sRPL_MYINFO:
                                         splt3 = splt2[1].Split(' ');
                                         _cachedIrcMessages.l004 = "> Servername: " + splt3[0] + Environment.NewLine + "> Version: " + splt3[1] + Environment.NewLine + "> Usermodes: " + splt3[2] + Environment.NewLine + "> Channel Modes: " + splt3[3];
-                                        Check001Through004();
+                                        Check001Through004(_cachedIrcMessages);
                                         break;
                                     case IrcNumerics.sRPL_MAP:
                                         StatusText("[ map ] " + splt2[2]);
@@ -358,7 +355,7 @@ namespace nexIRC.Infrustructure.Controllers {
                 throw ex;
             }
         }
-        private void Check001Through004() {
+        private void Check001Through004(CachedIrcMessages _cachedIrcMessages) {
             try {
                 if (!string.IsNullOrEmpty(_cachedIrcMessages.l001) && !string.IsNullOrEmpty(_cachedIrcMessages.l002) && !string.IsNullOrEmpty(_cachedIrcMessages.l003) && !string.IsNullOrEmpty(_cachedIrcMessages.l004)) {
                     StatusText("-" + Environment.NewLine + _cachedIrcMessages.l001 + Environment.NewLine + _cachedIrcMessages.l002 + Environment.NewLine + _cachedIrcMessages.l003 + Environment.NewLine + _cachedIrcMessages.l004 + Environment.NewLine + "-");

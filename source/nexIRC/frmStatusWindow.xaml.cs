@@ -21,7 +21,7 @@ namespace nexIRC {
         public StatusWindow(GlobalObject obj, IrcServerInfoModel ircInfo) {
             try {
                 InitializeComponent();
-                var userSettings = UserSettingsController.GetUserSettings();
+                var userSettings = UserSettingsController.GetUserSettingsModel();
                 if (obj == null) {
                     _obj = new GlobalObject();
                 } else {
@@ -35,13 +35,14 @@ namespace nexIRC {
                 WindUp();
                 lblServer.Text = "Server: " + ircInfo.Server;
                 lblNickname.Text = "Nickname: " + userSettings.Nickname;
-                lblConnectionStatus.Text = "Connection Information: Not Connected";
+                if (_obj.IsConnected(_statusIndex)) {
+                    lblConnectionStatus.Text = "Connection Information: Connected";
+                } else {
+                    lblConnectionStatus.Text = "Connection Information: Not Connected";
+                }
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
-        }
-        private void cmdConnect_Click_1(object sender, EventArgs e) {
-
         }
         void _obj_ConnectedEvent(int id) {
             if (_statusIndex == id) {
@@ -118,13 +119,13 @@ namespace nexIRC {
         /// On Status Caption
         /// </summary>
         /// <param name="data"></param>
-        private void _controller_OnStatusCaption(string data) {
-            try {
-                this.Dispatcher.BeginInvoke(new Action(() => pvtStatus.Title = data ));
-            } catch (Exception ex) {
-                throw ex;
-            }
-        }
+        //private void _controller_OnStatusCaption(string data) {
+            //try {
+                //this.Dispatcher.BeginInvoke(new Action(() => pvtStatus.Title = data ));
+            //} catch (Exception ex) {
+                //throw ex;
+            //}
+        //}
         /// <summary>
         /// Raw Incoming TextChanged
         /// </summary>
@@ -274,7 +275,7 @@ namespace nexIRC {
                 _obj.Controller(_statusIndex).SendData += _controller_SendData;
                 _obj.Controller(_statusIndex).RawEvt += _controller_RawEvt;
                 _obj.Controller(_statusIndex).DisconnectedEvt += _controller_DisconnectedEvt;
-                _obj.Controller(_statusIndex).OnStatusCaption += _controller_OnStatusCaption;
+                //_obj.Controller(_statusIndex).OnStatusCaption += _controller_OnStatusCaption;
                 _obj.ConnectedEvent += _obj_ConnectedEvent;
             } catch (Exception ex) {
                 throw ex;

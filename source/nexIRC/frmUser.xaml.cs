@@ -7,6 +7,10 @@ namespace nexIRC {
     public partial class Customize : PhoneApplicationPage {
         private UserSettingsModel _userSettings;
         private GlobalObject _obj;
+        /// <summary>
+        /// Customize
+        /// </summary>
+        /// <param name="obj"></param>
         public Customize(GlobalObject obj) {
             try {
                 if (obj == null) {
@@ -15,7 +19,7 @@ namespace nexIRC {
                     _obj = obj;
                 }
                 InitializeComponent();
-                _userSettings = UserSettingsController.GetUserSettings();
+                _userSettings = UserSettingsController.GetUserSettingsModel();
                 txtNickname.Text = _userSettings.Nickname;
                 txtAltNickname.Text = _userSettings.AltNickname;
                 txtPassword.Text = _userSettings.Password;
@@ -26,6 +30,11 @@ namespace nexIRC {
                 MessageBox.Show(ex.Message);
             }
         }
+        /// <summary>
+        /// Save 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void cmdSave_Click(object sender, RoutedEventArgs e) {
             try {
                 _userSettings.Nickname = txtNickname.Text;

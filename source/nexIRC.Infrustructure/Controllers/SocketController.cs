@@ -16,35 +16,59 @@ namespace nexIRC.Infrustructure.Controllers {
         /// </summary>
         /// <param name="data"></param>
         public delegate void DataArrivalEvent(string data);
+        /// <summary>
+        /// Data Arrival Event
+        /// </summary>
         public event DataArrivalEvent DataArrival;
         /// <summary>
         /// Connected Event
         /// </summary>
         public delegate void ConnectedEvent();
+        /// <summary>
+        /// Connected Evt
+        /// </summary>
         public event ConnectedEvent ConnectedEvt;
+        /// <summary>
+        /// Disconnected Evt
+        /// </summary>
         public delegate void DisconnectedEvent();
-        //public event DisconnectedEvent DisconnectedEvt;
+        /// <summary>
+        /// Disconnected Event
+        /// </summary>
+        public event DisconnectedEvent DisconnectedEvt;
         #endregion
         #region "public properties"
+        /// <summary>
+        /// Closing
+        /// </summary>
         public bool Closing { get; set; }
+        /// <summary>
+        /// Connecting
+        /// </summary>
         public bool Connecting { get; set; }
+        /// <summary>
+        /// Connected
+        /// </summary>
         public bool Connected { get; set; }
         #endregion
         #region "private properties"
-        //private IrcServerInfoModel _settings { get; set; }
+        /// <summary>
+        /// Client Socket
+        /// </summary>
         private readonly StreamSocket _clientSocket;
+        /// <summary>
+        /// Data Reader
+        /// </summary>
         private DataReader _dataReader;
         #endregion
         /// <summary>
-        /// Entry Point (requires settings)
+        /// Entry Point
         /// </summary>
         /// <param name="settings"></param>
-        //public SocketController(IrcServerInfoModel settings) {
         public SocketController() {
             try {
                 Connecting = true;
                 _clientSocket = new StreamSocket();
-                //_settings = settings;
             } catch (Exception ex) {
                 throw ex;
             }
@@ -87,6 +111,9 @@ namespace nexIRC.Infrustructure.Controllers {
                 }
                 ReadData();
             } catch (Exception ex) {
+                if (DisconnectedEvt != null) {
+                    DisconnectedEvt();
+                }
                 throw ex;
             }
         }
@@ -106,6 +133,9 @@ namespace nexIRC.Infrustructure.Controllers {
                     Connected = false;
                 }
             } catch (Exception ex) {
+                if (DisconnectedEvt != null) {
+                    DisconnectedEvt();
+                }
                 throw ex;
             }
         }
@@ -117,6 +147,9 @@ namespace nexIRC.Infrustructure.Controllers {
                 Closing = false;
                 Connected = false;
                 _clientSocket.Dispose();
+                if (DisconnectedEvt != null) {
+                    DisconnectedEvt();
+                }
             } catch (Exception ex) {
                 throw ex;
             }

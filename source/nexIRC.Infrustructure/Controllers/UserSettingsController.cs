@@ -20,7 +20,7 @@ namespace nexIRC.Infrustructure.Controllers {
         /// Get Irc Settings
         /// </summary>
         /// <returns></returns>
-        public static UserSettingsModel GetUserSettings() {
+        public static UserSettingsModel GetUserSettingsModel() {
             try {
                 var model = new UserSettingsModel();
                 var b = false;

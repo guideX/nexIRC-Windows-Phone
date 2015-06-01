@@ -91,6 +91,7 @@
     <Compile Include="Models\GlobalObject.cs" />
     <Compile Include="Models\IrcServerInfoModel.cs" />
     <Compile Include="Models\UserSettingsModel.cs" />
+    <Compile Include="Models\StatusObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Structures\IrcNumerics.cs" />
   </ItemGroup>
