@@ -1,5 +1,6 @@
 ﻿using nexIRC.Infrustructure.Controllers;
 using nexIRC.Infrustructure.Models;
+using System.Text;
 using System.Threading.Tasks;
 namespace nexIRC.Infrustructure.Models {
     public class StatusObject {
@@ -10,16 +11,8 @@ namespace nexIRC.Infrustructure.Models {
         public event OnDisconnectedEvent DisconnectedEvent;
         public delegate void DoStatusText(int id, string data);
         public event DoStatusText OnDoStatusText;
-        /// <summary>
-        /// On Do Status Text
-        /// </summary>
-        /// <param name="data"></param>
-        //private void StatusObject_OnDoStatusText(int id, string data) {
-            //if (OnDoStatusText != null) {
-                //OnDoStatusText(id, data);
-            //}
-        //}
         private void Controller_OnDoStatusText(string data) {
+            StatusTextBackup.AppendLine(data);
             if (OnDoStatusText != null) {
                 OnDoStatusText(MyId, data);
             }
@@ -32,6 +25,8 @@ namespace nexIRC.Infrustructure.Models {
         public StatusController Controller { get; set; }
         public CommandController CommandController { get; set; }
         public bool IsConnected { get; set; }
+        public StringBuilder StatusTextBackup { get; set; }
+        public StringBuilder RawTextBackup { get; set; }
         #endregion
         #region "private variables"
         private SocketController _socket;
@@ -48,6 +43,8 @@ namespace nexIRC.Infrustructure.Models {
             CommandController = new CommandController();
             _socket = new SocketController();
             _cachedIrcMessages = new CachedIrcMessages();
+            StatusTextBackup = new StringBuilder();
+            RawTextBackup = new StringBuilder();
             WindUp();
         }
         /// <summary>
@@ -58,11 +55,8 @@ namespace nexIRC.Infrustructure.Models {
             _socket.ConnectedEvt += Socket_ConnectedEvt;
             _socket.DisconnectedEvt += Socket_DisonnectedEvt;
             _cachedIrcMessages = new CachedIrcMessages();
-            //OnDoStatusText += StatusObject_OnDoStatusText;
             Controller.OnDoStatusText += Controller_OnDoStatusText;
         }
-
-
         /// <summary>
         /// Connected Event
         /// </summary>
@@ -89,9 +83,6 @@ namespace nexIRC.Infrustructure.Models {
         private void Socket_DataArrival(string data) {
             if (!string.IsNullOrEmpty(data)) {
                 Controller.Status_DataArrival(data, _cachedIrcMessages);
-                //if (DataArrival != null) {
-                //DataArrival(data);
-                //}
             }
         }
         /// <summary>
@@ -119,6 +110,7 @@ namespace nexIRC.Infrustructure.Models {
         /// </summary>
         /// <param name="data"></param>
         private void _controller_RawEvt(string data) {
+            RawTextBackup.AppendLine(data);
             UserSettings.RawText.Add(data);
         }
     }

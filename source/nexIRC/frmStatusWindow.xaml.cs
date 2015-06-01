@@ -6,6 +6,9 @@ using Windows.Phone.UI.Input;
 using System.Windows;
 using Windows.UI.Core;
 using nexIRC.ViewModels;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Windows.Storage.Streams;
 namespace nexIRC {
     /// <summary>
     /// Status Window
@@ -31,7 +34,13 @@ namespace nexIRC {
                 _viewModel.StatusIndex = _viewModel.Obj.GetId(userSettings, ircInfo);
                 if (_viewModel.StatusIndex == -1) {
                     _viewModel.StatusIndex = _viewModel.Obj.Create(userSettings, ircInfo);
+                } else {
+                    txtIncoming.Text = _viewModel.Obj.StatusTextBackup(_viewModel.StatusIndex).ToString();
+                    txtRawIncoming.Text = _viewModel.Obj.RawTextBackup(_viewModel.StatusIndex).ToString();
                 }
+                var bitmapImage = new BitmapImage();
+                bitmapImage.UriSource = new Uri("ms-appx:" + ircInfo.ImagePath);
+                imgNetwork.Source = bitmapImage;
                 pvtStatus.Title = ircInfo.Network;
                 WindUp();
                 lblServer.Text = "Server: " + ircInfo.Server;
@@ -49,7 +58,7 @@ namespace nexIRC {
                 MessageBox.Show(ex.Message);
             }
         }
-        void _obj_ConnectedEvent(int id) {
+        private void _obj_ConnectedEvent(int id) {
             if (_viewModel.StatusIndex == id) {
                 this.Dispatcher.BeginInvoke(new Action(() => cmdConnect.IsEnabled = false));
                 this.Dispatcher.BeginInvoke(new Action(() => cmdDisconnect.IsEnabled = true));
@@ -121,17 +130,6 @@ namespace nexIRC {
                 MessageBox.Show(ex.Message);
             }
         }
-        /// <summary>
-        /// On Status Caption
-        /// </summary>
-        /// <param name="data"></param>
-        //private void _controller_OnStatusCaption(string data) {
-            //try {
-                //this.Dispatcher.BeginInvoke(new Action(() => pvtStatus.Title = data ));
-            //} catch (Exception ex) {
-                //throw ex;
-            //}
-        //}
         /// <summary>
         /// Raw Incoming TextChanged
         /// </summary>
@@ -266,12 +264,9 @@ namespace nexIRC {
                 cmdConnect.Click += cmdConnect_Click;
                 cmdDisconnect.Click += cmdDisconnect_Click;
                 cmdGoBack.Click += cmdGoBack_Click;
-                //_viewModel.Obj.Controller(_viewModel.StatusIndex).OnDoStatusText += _controller_OnDoStatusText;
-                //_viewModel.Obj.Controller(_viewModel.StatusIndex).OnDoStatusText += _controller_OnDoStatusText;
                 _viewModel.Obj.Controller(_viewModel.StatusIndex).SendData += _controller_SendData;
                 _viewModel.Obj.Controller(_viewModel.StatusIndex).RawEvt += _controller_RawEvt;
                 _viewModel.Obj.Controller(_viewModel.StatusIndex).DisconnectedEvt += _controller_DisconnectedEvt;
-                //_obj.Controller(_statusIndex).OnStatusCaption += _controller_OnStatusCaption;
                 _viewModel.Obj.ConnectedEvent += _obj_ConnectedEvent;
                 _viewModel.Obj.OnDoStatusText += Obj_OnDoStatusText;
             } catch (Exception ex) {

@@ -103,8 +103,8 @@ namespace nexIRC.Infrustructure.Controllers {
                 if (!b) {
                     // Nothing existed in the record, add the defaults ;)
                     models.Add(new IrcServerInfoModel() { Server = "irc.freenode.org", Port = 6667, Network = "Freenode", ImagePath = "/Assets/freenode.jpg" });
-                    models.Add(new IrcServerInfoModel() { Server = "us.undernet.org", Port = 6667, Network = "Undernet" });
-                    models.Add(new IrcServerInfoModel() { Server = "irc.gamesurge.net", Port = 6667, Network = "GameSurge" });
+                    models.Add(new IrcServerInfoModel() { Server = "us.undernet.org", Port = 6667, Network = "Undernet", ImagePath = "/Assets/undernet.jpg" });
+                    models.Add(new IrcServerInfoModel() { Server = "irc.gamesurge.net", Port = 6667, Network = "GameSurge", ImagePath = "/Assets/gamesurge.jpg" });
                     models.Add(new IrcServerInfoModel() { Server = "irc.rizon.net", Port = 6667, Network = "Rizon" });
                     models.Add(new IrcServerInfoModel() { Server = "irc.dal.net", Port = 6667, Network = "DALnet" });
                     models.Add(new IrcServerInfoModel() { Server = "irc.quakenet.org", Port = 6667, Network = "Quakenet" });

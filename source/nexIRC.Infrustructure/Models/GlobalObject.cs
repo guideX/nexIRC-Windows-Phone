@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using nexIRC.Infrustructure.Controllers;
+using System.Text;
 namespace nexIRC.Infrustructure.Models {
     public class GlobalObject {
         #region "events"
@@ -37,8 +38,21 @@ namespace nexIRC.Infrustructure.Models {
         #region "private variables"
         private List<StatusObject> _statusObjects = new List<StatusObject>();
         #endregion
-        public GlobalObject() {
-            
+        /// <summary>
+        /// Raw Text Backup
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public StringBuilder RawTextBackup(int id) {
+            return _statusObjects[id].RawTextBackup;
+        }
+        /// <summary>
+        /// Status Text Backup
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public StringBuilder StatusTextBackup(int id) {
+            return _statusObjects[id].StatusTextBackup;
         }
         /// <summary>
         /// Is Connected
