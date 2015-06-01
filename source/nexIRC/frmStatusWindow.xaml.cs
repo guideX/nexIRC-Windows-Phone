@@ -5,14 +5,14 @@ using nexIRC.Infrustructure.Models;
 using Windows.Phone.UI.Input;
 using System.Windows;
 using Windows.UI.Core;
+using nexIRC.ViewModels;
 namespace nexIRC {
     /// <summary>
     /// Status Window
     /// </summary>
     public partial class StatusWindow : PhoneApplicationPage {
         #region "private variables"
-        private int _statusIndex;
-        private GlobalObject _obj;
+        private StatusWindowViewModel _viewModel;
         #endregion
         /// <summary>
         /// Status Window Entry Point
@@ -21,21 +21,22 @@ namespace nexIRC {
         public StatusWindow(GlobalObject obj, IrcServerInfoModel ircInfo) {
             try {
                 InitializeComponent();
+                _viewModel = new StatusWindowViewModel();
                 var userSettings = UserSettingsController.GetUserSettingsModel();
                 if (obj == null) {
-                    _obj = new GlobalObject();
+                    _viewModel.Obj = new GlobalObject();
                 } else {
-                    _obj = obj;
+                    _viewModel.Obj = obj;
                 }
-                _statusIndex = _obj.GetId(userSettings, ircInfo);
-                if (_statusIndex == -1) {
-                    _statusIndex = _obj.Create(userSettings, ircInfo);
+                _viewModel.StatusIndex = _viewModel.Obj.GetId(userSettings, ircInfo);
+                if (_viewModel.StatusIndex == -1) {
+                    _viewModel.StatusIndex = _viewModel.Obj.Create(userSettings, ircInfo);
                 }
                 pvtStatus.Title = ircInfo.Network;
                 WindUp();
                 lblServer.Text = "Server: " + ircInfo.Server;
                 lblNickname.Text = "Nickname: " + userSettings.Nickname;
-                if (_obj.IsConnected(_statusIndex)) {
+                if (_viewModel.Obj.IsConnected(_viewModel.StatusIndex)) {
                     cmdDisconnect.IsEnabled = true;
                     cmdConnect.IsEnabled = false;
                     lblConnectionStatus.Text = "Connection Information: Connected";
@@ -49,7 +50,7 @@ namespace nexIRC {
             }
         }
         void _obj_ConnectedEvent(int id) {
-            if (_statusIndex == id) {
+            if (_viewModel.StatusIndex == id) {
                 this.Dispatcher.BeginInvoke(new Action(() => cmdConnect.IsEnabled = false));
                 this.Dispatcher.BeginInvoke(new Action(() => cmdDisconnect.IsEnabled = true));
                 this.Dispatcher.BeginInvoke(new Action(() => lblConnectionStatus.Text = "Connection Information: Connected"));
@@ -65,7 +66,7 @@ namespace nexIRC {
         private void cmdGoBack_Click(object sender, RoutedEventArgs e) {
             try {
                 var mainPage = new MainPage();
-                mainPage.Obj = _obj;
+                mainPage.Obj = _viewModel.Obj;
                 this.Content = mainPage;
             } catch (Exception ex) {
                 throw ex;
@@ -115,7 +116,7 @@ namespace nexIRC {
             try {
                 cmdConnect.IsEnabled = false;
                 lblConnectionStatus.Text = "Connection Information: Connecting to server ... ";
-                _obj.Connect(_statusIndex);
+                _viewModel.Obj.Connect(_viewModel.StatusIndex);
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
@@ -169,22 +170,11 @@ namespace nexIRC {
             }
         }
         /// <summary>
-        /// On Do Status Text
-        /// </summary>
-        /// <param name="data"></param>
-        private void _controller_OnDoStatusText(string data) {
-            try {
-                 TextBoxText(txtIncoming, data);
-            } catch (Exception ex) {
-                MessageBox.Show(ex.Message);
-            }
-        }
-        /// <summary>
         /// On Disconnected Event
         /// </summary>
         private void _controller_DisconnectedEvt() {
             try {
-                this.Dispatcher.BeginInvoke(new Action(() => _obj.Disconnect(_statusIndex)));
+                this.Dispatcher.BeginInvoke(new Action(() => _viewModel.Obj.Disconnect(_viewModel.StatusIndex)));
                 this.Dispatcher.BeginInvoke(new Action(() => cmdConnect.IsEnabled = true));
                 this.Dispatcher.BeginInvoke(new Action(() => cmdDisconnect.IsEnabled = false));
             } catch (Exception ex) {
@@ -197,7 +187,7 @@ namespace nexIRC {
         /// <param name="data"></param>
         private void _controller_SendData(string data) {
             try {
-                this.Dispatcher.BeginInvoke(new Action(() => _obj.SendData(_statusIndex, data)));
+                this.Dispatcher.BeginInvoke(new Action(() => _viewModel.Obj.SendData(_viewModel.StatusIndex, data)));
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
@@ -238,7 +228,7 @@ namespace nexIRC {
                         if (txtOutgoing.Text.Length != 0) {
                             var msg = txtOutgoing.Text.Remove(0, 1);
                             txtOutgoing.Text = "";
-                            _obj.CommandController(_statusIndex).StatusCommand(msg);
+                            _viewModel.Obj.CommandController(_viewModel.StatusIndex).StatusCommand(msg);
                             e.Handled = true;
                         }
                         break;
@@ -276,14 +266,28 @@ namespace nexIRC {
                 cmdConnect.Click += cmdConnect_Click;
                 cmdDisconnect.Click += cmdDisconnect_Click;
                 cmdGoBack.Click += cmdGoBack_Click;
-                _obj.Controller(_statusIndex).OnDoStatusText += _controller_OnDoStatusText;
-                _obj.Controller(_statusIndex).SendData += _controller_SendData;
-                _obj.Controller(_statusIndex).RawEvt += _controller_RawEvt;
-                _obj.Controller(_statusIndex).DisconnectedEvt += _controller_DisconnectedEvt;
+                //_viewModel.Obj.Controller(_viewModel.StatusIndex).OnDoStatusText += _controller_OnDoStatusText;
+                //_viewModel.Obj.Controller(_viewModel.StatusIndex).OnDoStatusText += _controller_OnDoStatusText;
+                _viewModel.Obj.Controller(_viewModel.StatusIndex).SendData += _controller_SendData;
+                _viewModel.Obj.Controller(_viewModel.StatusIndex).RawEvt += _controller_RawEvt;
+                _viewModel.Obj.Controller(_viewModel.StatusIndex).DisconnectedEvt += _controller_DisconnectedEvt;
                 //_obj.Controller(_statusIndex).OnStatusCaption += _controller_OnStatusCaption;
-                _obj.ConnectedEvent += _obj_ConnectedEvent;
+                _viewModel.Obj.ConnectedEvent += _obj_ConnectedEvent;
+                _viewModel.Obj.OnDoStatusText += Obj_OnDoStatusText;
             } catch (Exception ex) {
                 throw ex;
+            }
+        }
+        /// <summary>
+        /// On Do Status Text
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="data"></param>
+        private void Obj_OnDoStatusText(int id, string data) {
+            try {
+                TextBoxText(txtIncoming, data);
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message);
             }
         }
     }

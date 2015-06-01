@@ -46,11 +46,11 @@ namespace nexIRC.Infrustructure.Controllers {
         /// On Do Status Text
         /// </summary>
         /// <param name="data"></param>
-        private void _ircStringHelper_OnDoStatusText(string data) {
-            if (OnDoStatusText != null) {
-                OnDoStatusText(data);
-            }
-        }
+        //private void _ircStringHelper_OnDoStatusText(string data) {
+            //if (OnDoStatusText != null) {
+                //OnDoStatusText(data);
+            //}
+        //}
         /// <summary>
         /// Data Arrival (parsing function)
         /// </summary>

@@ -1,20 +1,25 @@
-﻿using nexIRC.Infrustructure.Controllers;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using nexIRC.Infrustructure.Controllers;
 namespace nexIRC.Infrustructure.Models {
     public class GlobalObject {
         #region "events"
-        /// <summary>
-        /// Connected Event
-        /// </summary>
         public event OnConnectedEvent ConnectedEvent;
+        public delegate void OnConnectedEvent(int id);
+        public delegate void DoStatusText(int id, string data);
+        public event DoStatusText OnDoStatusText;
         /// <summary>
-        /// On Connected Event
+        /// On Do Status Text
         /// </summary>
         /// <param name="id"></param>
-        public delegate void OnConnectedEvent(int id);
+        /// <param name="data"></param>
+        private void GlobalObject_OnDoStatusText(int id, string data) {
+            if (OnDoStatusText != null) {
+                OnDoStatusText(id, data);
+            }
+        }
         /// <summary>
         /// Connected Event
         /// </summary>
@@ -30,19 +35,10 @@ namespace nexIRC.Infrustructure.Models {
         }
         #endregion
         #region "private variables"
-        /// <summary>
-        /// Status Objects
-        /// </summary>
         private List<StatusObject> _statusObjects = new List<StatusObject>();
         #endregion
-        /// <summary>
-        /// Entry Point
-        /// </summary>
         public GlobalObject() {
-            try {
-            } catch (Exception ex) {
-                throw ex;
-            }
+            
         }
         /// <summary>
         /// Is Connected
@@ -91,14 +87,6 @@ namespace nexIRC.Infrustructure.Models {
             return _statusObjects[id].Controller;
         }
         /// <summary>
-        /// User Settings
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        //private UserSettingsModel _userSettings(int id) {
-            //return _statusObjects[id].UserSettings;
-        //}
-        /// <summary>
         /// Command Controller
         /// </summary>
         /// <param name="id"></param>
@@ -138,6 +126,7 @@ namespace nexIRC.Infrustructure.Models {
             var newStatus = new StatusObject(userSettings, ircInfo);
             _statusObjects.Add(newStatus);
             newStatus.ConnectedEvent += GlobalObject_ConnectedEvent;
+            newStatus.OnDoStatusText += GlobalObject_OnDoStatusText;
             return GetId(userSettings, ircInfo);
         }
     }
