@@ -51,7 +51,7 @@ namespace nexIRC.Infrustructure.Models {
         /// <returns></returns>
         public bool IsConnected(int id) {
             try {
-                _statusObjects[id].IsConnected();
+                return _statusObjects[id].IsConnected;
             } catch (Exception ex) {
                 throw ex;
             }

@@ -36,8 +36,12 @@ namespace nexIRC {
                 lblServer.Text = "Server: " + ircInfo.Server;
                 lblNickname.Text = "Nickname: " + userSettings.Nickname;
                 if (_obj.IsConnected(_statusIndex)) {
+                    cmdDisconnect.IsEnabled = true;
+                    cmdConnect.IsEnabled = false;
                     lblConnectionStatus.Text = "Connection Information: Connected";
                 } else {
+                    cmdDisconnect.IsEnabled = false;
+                    cmdConnect.IsEnabled = true;
                     lblConnectionStatus.Text = "Connection Information: Not Connected";
                 }
             } catch (Exception ex) {
@@ -48,6 +52,7 @@ namespace nexIRC {
             if (_statusIndex == id) {
                 this.Dispatcher.BeginInvoke(new Action(() => cmdConnect.IsEnabled = false));
                 this.Dispatcher.BeginInvoke(new Action(() => cmdDisconnect.IsEnabled = true));
+                this.Dispatcher.BeginInvoke(new Action(() => lblConnectionStatus.Text = "Connection Information: Connected"));
             }
         }
         private void pvtStatus_Loaded(object sender, EventArgs e) {
