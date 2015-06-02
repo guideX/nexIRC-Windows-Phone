@@ -74,6 +74,7 @@ namespace nexIRC.Infrustructure.Models {
             if (DisconnectedEvent != null) {
                 DisconnectedEvent(MyId);
                 IsConnected = false;
+                IrcInfo.IsConnected = IsConnected;
             }
         }
         /// <summary>

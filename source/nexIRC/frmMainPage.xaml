@@ -47,6 +47,7 @@
                                 <StackPanel Width="311" Margin="8,-7,0,0">
                                     <TextBlock Text="{Binding Network}" TextWrapping="Wrap" Margin="10,0" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" />
                                     <TextBlock Text="{Binding Server}" TextWrapping="Wrap" Margin="10,-2,10,0" Style="{StaticResource PhoneTextSubtleStyle}" />
+                                    <TextBlock Text="{Binding IsConnected}" TextWrapping="Wrap" Margin="10,-4,20,0" Style="{StaticResource PhoneTextSubtleStyle}" />
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>

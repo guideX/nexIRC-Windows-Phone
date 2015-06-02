@@ -1,14 +1,14 @@
 ﻿using System;
-using Microsoft.Phone.Controls;
-using nexIRC.Infrustructure.Controllers;
-using nexIRC.Infrustructure.Models;
-using Windows.Phone.UI.Input;
 using System.Windows;
-using Windows.UI.Core;
-using nexIRC.ViewModels;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Microsoft.Phone.Controls;
+using Windows.Phone.UI.Input;
+using Windows.UI.Core;
 using Windows.Storage.Streams;
+using nexIRC.ViewModels;
+using nexIRC.Infrustructure.Controllers;
+using nexIRC.Infrustructure.Models;
 namespace nexIRC {
     /// <summary>
     /// Status Window
@@ -58,6 +58,10 @@ namespace nexIRC {
                 MessageBox.Show(ex.Message);
             }
         }
+        /// <summary>
+        /// Connected Event
+        /// </summary>
+        /// <param name="id"></param>
         private void _obj_ConnectedEvent(int id) {
             if (_viewModel.StatusIndex == id) {
                 this.Dispatcher.BeginInvoke(new Action(() => cmdConnect.IsEnabled = false));
@@ -247,11 +251,6 @@ namespace nexIRC {
                 throw ex;
             }
         }
-        //public void ShowMainPage() {
-            //var mainPage = new MainPage();
-            //mainPage.Obj = _obj;
-            //this.Content = mainPage;
-        //}
         /// <summary>
         /// Wind Up
         /// </summary>

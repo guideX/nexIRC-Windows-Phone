@@ -37,8 +37,8 @@
                         <TextBlock Name="lblServer" TextWrapping="Wrap" Text="Server: (Not Initialized)" FontWeight="Normal"/>
                         <TextBlock Name="lblNickname" TextWrapping="Wrap" Text="Nickname: (Not Initialized)" FontWeight="Normal"/>
                         <TextBlock Name="lblConnectionStatus" TextWrapping="Wrap" Text="Connection Status: Not Connected" FontWeight="Normal"/>
-                        <TextBlock></TextBlock>
                         <Image x:Name="imgNetwork" Height="100" Width="100" Margin="178,0"/>
+                        <TextBlock></TextBlock>
                         <Button IsEnabled="true" Name="cmdGoBack" Click="cmdGoBack_Click">Go Back</Button>
                         <Button IsEnabled="true" Name="cmdConnect" Click="cmdConnect_Click">Connect</Button>
                         <Button IsEnabled="false" Name="cmdDisconnect">Disconnect</Button>

@@ -12,6 +12,29 @@ namespace nexIRC.Infrustructure.Models {
         private int _port;
         private string _network;
         private string _imagePath;
+        private bool _isConnected;
+        /// <summary>
+        /// Is Connected
+        /// </summary>
+        public bool IsConnected {
+            get {
+                try {
+                    return _isConnected;
+                } catch (Exception ex) {
+                    throw ex;
+                }
+            }
+            set {
+                try {
+                    if (value != _isConnected) {
+                        _isConnected = value;
+                        NotifyPropertyChanged("IsConnected");
+                    }
+                } catch (Exception ex) {
+                    throw ex;
+                }
+            }
+        }
         /// <summary>
         /// Server
         /// </summary>
@@ -112,6 +135,10 @@ namespace nexIRC.Infrustructure.Models {
                 }
             }
         }
+        /// <summary>
+        /// Notify Property Changed
+        /// </summary>
+        /// <param name="propertyName"></param>
         private void NotifyPropertyChanged(String propertyName) {
             try {
                 var handler = PropertyChanged;
