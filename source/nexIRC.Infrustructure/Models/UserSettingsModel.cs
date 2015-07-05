@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 namespace nexIRC.Infrustructure.Models {
     /// <summary>
-    /// Irc Settings
+    /// User Settings
     /// </summary>
     public class UserSettingsModel {
-        /// <summary>
-        /// Irc Server Info Model
-        /// </summary>
-        //public IrcServerInfoModel IrcServerInfoModel { get; set; }
         /// <summary>
         /// Raw Text
         /// </summary>
@@ -33,14 +29,22 @@ namespace nexIRC.Infrustructure.Models {
         /// </summary>
         public string Nickname {
             get {
-                if (!string.IsNullOrEmpty(_nickname)) {
-                    return _nickname;
-                } else {
-                    return "";
+                try {
+                    if (!string.IsNullOrEmpty(_nickname)) {
+                        return _nickname;
+                    } else {
+                        return "";
+                    }
+                } catch (Exception ex) {
+                    throw ex;
                 }
             }
             set {
-                _nickname = value;
+                try {
+                    _nickname = value;
+                } catch (Exception ex) {
+                    throw ex;
+                }
             }
         }
         /// <summary>
@@ -48,14 +52,22 @@ namespace nexIRC.Infrustructure.Models {
         /// </summary>
         public string AltNickname { 
             get {
-                if (!string.IsNullOrEmpty(_altNickname)) {
-                    return _altNickname;
-                } else {
-                    return "";
+                try {
+                    if (!string.IsNullOrEmpty(_altNickname)) {
+                        return _altNickname;
+                    } else {
+                        return "";
+                    }
+                } catch (Exception ex) {
+                    throw ex;
                 }
             }
             set {
-                _altNickname = value;
+                try {
+                    _altNickname = value;
+                } catch (Exception ex) {
+                    throw ex;
+                }
             }
         }
         /// <summary>
@@ -63,14 +75,22 @@ namespace nexIRC.Infrustructure.Models {
         /// </summary>
         public string Username {
             get {
-                if (!string.IsNullOrEmpty(_username)) {
-                    return _username;
-                } else {
-                    return "";
+                try {
+                    if (!string.IsNullOrEmpty(_username)) {
+                        return _username;
+                    } else {
+                        return "";
+                    }
+                } catch (Exception ex) {
+                    throw ex;
                 }
             }
             set {
-                _username = value;
+                try {
+                    _username = value;
+                } catch (Exception ex) {
+                    throw ex;
+                }
             }
         }
         /// <summary>
@@ -78,14 +98,22 @@ namespace nexIRC.Infrustructure.Models {
         /// </summary>
         public string Password { 
             get {
-                if (!string.IsNullOrEmpty(_password)) {
-                    return _password;
-                } else {
-                    return "";
+                try {
+                    if (!string.IsNullOrEmpty(_password)) {
+                        return _password;
+                    } else {
+                        return "";
+                    }
+                } catch (Exception ex) {
+                    throw ex;
                 }
             }
             set {
-                _password = value;
+                try {
+                    _password = value;
+                } catch (Exception ex) {
+                    throw ex;
+                }
             }
         }
         /// <summary>
@@ -93,14 +121,22 @@ namespace nexIRC.Infrustructure.Models {
         /// </summary>
         public string QuitMessage {
             get {
-                if (!string.IsNullOrEmpty(_quitMessage)) {
-                    return _quitMessage;
-                } else {
-                    return "";
+                try {
+                    if (!string.IsNullOrEmpty(_quitMessage)) {
+                        return _quitMessage;
+                    } else {
+                        return "";
+                    }
+                } catch (Exception ex) {
+                    throw ex;
                 }
             }
             set {
-                _quitMessage = value;
+                try {
+                    _quitMessage = value;
+                } catch (Exception ex) {
+                    throw ex;
+                }
             }
         }
         /// <summary>

@@ -1,7 +1,8 @@
-﻿using nexIRC.Infrustructure.Controllers;
-using nexIRC.Infrustructure.Models;
+﻿using System;
 using System.Text;
 using System.Threading.Tasks;
+using nexIRC.Infrustructure.Controllers;
+using nexIRC.Infrustructure.Models;
 namespace nexIRC.Infrustructure.Models {
     public class StatusObject {
         #region "events"
@@ -11,12 +12,6 @@ namespace nexIRC.Infrustructure.Models {
         public event OnDisconnectedEvent DisconnectedEvent;
         public delegate void DoStatusText(int id, string data);
         public event DoStatusText OnDoStatusText;
-        private void Controller_OnDoStatusText(string data) {
-            StatusTextBackup.AppendLine(data);
-            if (OnDoStatusText != null) {
-                OnDoStatusText(MyId, data);
-            }
-        }
         #endregion
         #region "public properties"
         public IrcServerInfoModel IrcInfo { get; set; }
@@ -37,44 +32,73 @@ namespace nexIRC.Infrustructure.Models {
         /// </summary>
         /// <param name="userSettings"></param>
         public StatusObject(UserSettingsModel userSettings, IrcServerInfoModel ircInfo) {
-            IrcInfo = ircInfo;
-            UserSettings = userSettings;
-            Controller = new StatusController();
-            CommandController = new CommandController();
-            _socket = new SocketController();
-            _cachedIrcMessages = new CachedIrcMessages();
-            StatusTextBackup = new StringBuilder();
-            RawTextBackup = new StringBuilder();
-            WindUp();
+            try {
+                IrcInfo = ircInfo;
+                UserSettings = userSettings;
+                Controller = new StatusController();
+                CommandController = new CommandController();
+                _socket = new SocketController();
+                _cachedIrcMessages = new CachedIrcMessages();
+                StatusTextBackup = new StringBuilder();
+                RawTextBackup = new StringBuilder();
+                WindUp();
+            } catch (Exception ex) {
+                throw ex;
+            }
+        }
+        /// <summary>
+        /// On Do Status Text
+        /// </summary>
+        /// <param name="data"></param>
+        private void Controller_OnDoStatusText(string data) {
+            try {
+                StatusTextBackup.AppendLine(data);
+                if (OnDoStatusText != null) {
+                    OnDoStatusText(MyId, data);
+                }
+            } catch (Exception ex) {
+                throw ex;
+            }
         }
         /// <summary>
         /// Wind Up
         /// </summary>
         private void WindUp() {
-            _socket.DataArrival += Socket_DataArrival;
-            _socket.ConnectedEvt += Socket_ConnectedEvt;
-            _socket.DisconnectedEvt += Socket_DisonnectedEvt;
-            _cachedIrcMessages = new CachedIrcMessages();
-            Controller.OnDoStatusText += Controller_OnDoStatusText;
+            try {
+                _socket.DataArrival += Socket_DataArrival;
+                _socket.ConnectedEvt += Socket_ConnectedEvt;
+                _socket.DisconnectedEvt += Socket_DisonnectedEvt;
+                Controller.OnDoStatusText += Controller_OnDoStatusText;
+            } catch (Exception ex) {
+                throw ex;
+            }
         }
         /// <summary>
         /// Connected Event
         /// </summary>
         private void Socket_ConnectedEvt() {
-            Controller.SendIdentity(UserSettings);
-            if (ConnectedEvent != null) {
-                ConnectedEvent(MyId);
-                IsConnected = true;
+            try {
+                Controller.SendIdentity(UserSettings);
+                if (ConnectedEvent != null) {
+                    ConnectedEvent(MyId);
+                    IsConnected = true;
+                }
+            } catch (Exception ex) {
+                throw ex;
             }
         }
         /// <summary>
         /// Disconnected Event
         /// </summary>
         private void Socket_DisonnectedEvt() {
-            if (DisconnectedEvent != null) {
-                DisconnectedEvent(MyId);
-                IsConnected = false;
-                IrcInfo.IsConnected = IsConnected;
+            try {
+                if (DisconnectedEvent != null) {
+                    DisconnectedEvent(MyId);
+                    IsConnected = false;
+                    IrcInfo.IsConnected = IsConnected;
+                }
+            } catch (Exception ex) {
+                throw ex;
             }
         }
         /// <summary>
@@ -82,37 +106,57 @@ namespace nexIRC.Infrustructure.Models {
         /// </summary>
         /// <param name="data"></param>
         private void Socket_DataArrival(string data) {
-            if (!string.IsNullOrEmpty(data)) {
-                Controller.Status_DataArrival(data, _cachedIrcMessages);
+            try {
+                if (!string.IsNullOrEmpty(data)) {
+                    Controller.Status_DataArrival(data, _cachedIrcMessages);
+                }
+            } catch (Exception ex) {
+                throw ex;
             }
         }
         /// <summary>
         /// Connect
         /// </summary>
         public void Connect() {
-            var task = Task.Run(async () => { await _socket.Connect(IrcInfo.Server, IrcInfo.Port.ToString()); });
-            task.Wait();
+            try {
+                var task = Task.Run(async () => { await _socket.Connect(IrcInfo.Server, IrcInfo.Port.ToString()); });
+                task.Wait();
+            } catch (Exception ex) {
+                throw ex;
+            }
         }
         /// <summary>
         /// Disconnect
         /// </summary>
         public void Disconnect() {
-            _socket.Close();
+            try {
+                _socket.Close();
+            } catch (Exception ex) {
+                throw ex;
+            }
         }
         /// <summary>
         /// Send Data
         /// </summary>
         /// <param name="data"></param>
         public void SendData(string data) {
-            _socket.SendData(data);
+            try {
+                _socket.SendData(data);
+            } catch (Exception ex) {
+                throw ex;
+            }
         }
         /// <summary>
         /// Incoming Raw Text
         /// </summary>
         /// <param name="data"></param>
         private void _controller_RawEvt(string data) {
-            RawTextBackup.AppendLine(data);
-            UserSettings.RawText.Add(data);
+            try {
+                RawTextBackup.AppendLine(data);
+                UserSettings.RawText.Add(data);
+            } catch (Exception ex) {
+                throw ex;
+            }
         }
     }
 }

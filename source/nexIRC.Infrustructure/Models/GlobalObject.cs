@@ -44,7 +44,11 @@ namespace nexIRC.Infrustructure.Models {
         /// <param name="id"></param>
         /// <returns></returns>
         public StringBuilder RawTextBackup(int id) {
-            return _statusObjects[id].RawTextBackup;
+            try {
+                return _statusObjects[id].RawTextBackup;
+            } catch (Exception ex) {
+                throw ex;
+            }
         }
         /// <summary>
         /// Status Text Backup
@@ -52,7 +56,11 @@ namespace nexIRC.Infrustructure.Models {
         /// <param name="id"></param>
         /// <returns></returns>
         public StringBuilder StatusTextBackup(int id) {
-            return _statusObjects[id].StatusTextBackup;
+            try {
+                return _statusObjects[id].StatusTextBackup;
+            } catch (Exception ex) {
+                throw ex;
+            }
         }
         /// <summary>
         /// Is Connected
@@ -90,7 +98,11 @@ namespace nexIRC.Infrustructure.Models {
         /// </summary>
         /// <param name="id"></param>
         public void Disconnect(int id) {
-            _statusObjects[id].Disconnect();
+            try {
+                _statusObjects[id].Disconnect();
+            } catch (Exception ex) {
+                throw ex;
+            }
         }
         /// <summary>
         /// Controller
@@ -98,7 +110,11 @@ namespace nexIRC.Infrustructure.Models {
         /// <param name="id"></param>
         /// <returns></returns>
         public StatusController Controller(int id) {
-            return _statusObjects[id].Controller;
+            try {
+                return _statusObjects[id].Controller;
+            } catch (Exception ex) {
+                throw ex;
+            }
         }
         /// <summary>
         /// Command Controller
@@ -106,7 +122,11 @@ namespace nexIRC.Infrustructure.Models {
         /// <param name="id"></param>
         /// <returns></returns>
         public CommandController CommandController(int id) {
-            return _statusObjects[id].CommandController;
+            try {
+                return _statusObjects[id].CommandController;
+            } catch (Exception ex) {
+                throw ex;
+            }
         }
         /// <summary>
         /// Get Id
@@ -115,19 +135,23 @@ namespace nexIRC.Infrustructure.Models {
         /// <param name="ircServerInfoModel"></param>
         /// <returns></returns>
         public int GetId(UserSettingsModel userSettings, IrcServerInfoModel ircServerInfoModel) {
-            var objs = _statusObjects.Where(so =>
-                so.UserSettings.Nickname == userSettings.Nickname &&
-                so.IrcInfo.Network == ircServerInfoModel.Network &&
-                so.IrcInfo.Port == ircServerInfoModel.Port &&
-                so.IrcInfo.Server == ircServerInfoModel.Server).ToList();
-            if (objs.Count() != 0) {
-                return _statusObjects.FindIndex(so =>
-                so.UserSettings.Nickname == userSettings.Nickname &&
-                so.IrcInfo.Network == ircServerInfoModel.Network &&
-                so.IrcInfo.Port == ircServerInfoModel.Port &&
-                so.IrcInfo.Server == ircServerInfoModel.Server);
-            } else {
-                return -1;
+            try {
+                var objs = _statusObjects.Where(so =>
+                    so.UserSettings.Nickname == userSettings.Nickname &&
+                    so.IrcInfo.Network == ircServerInfoModel.Network &&
+                    so.IrcInfo.Port == ircServerInfoModel.Port &&
+                    so.IrcInfo.Server == ircServerInfoModel.Server).ToList();
+                if (objs.Count() != 0) {
+                    return _statusObjects.FindIndex(so =>
+                    so.UserSettings.Nickname == userSettings.Nickname &&
+                    so.IrcInfo.Network == ircServerInfoModel.Network &&
+                    so.IrcInfo.Port == ircServerInfoModel.Port &&
+                    so.IrcInfo.Server == ircServerInfoModel.Server);
+                } else {
+                    return -1;
+                }
+            } catch (Exception ex) {
+                throw ex;
             }
         }
         /// <summary>
@@ -137,11 +161,15 @@ namespace nexIRC.Infrustructure.Models {
         /// <param name="ircInfo"></param>
         /// <returns></returns>
         public int Create(UserSettingsModel userSettings, IrcServerInfoModel ircInfo) {
-            var newStatus = new StatusObject(userSettings, ircInfo);
-            _statusObjects.Add(newStatus);
-            newStatus.ConnectedEvent += GlobalObject_ConnectedEvent;
-            newStatus.OnDoStatusText += GlobalObject_OnDoStatusText;
-            return GetId(userSettings, ircInfo);
+            try {
+                var newStatus = new StatusObject(userSettings, ircInfo);
+                _statusObjects.Add(newStatus);
+                newStatus.ConnectedEvent += GlobalObject_ConnectedEvent;
+                newStatus.OnDoStatusText += GlobalObject_OnDoStatusText;
+                return GetId(userSettings, ircInfo);
+            } catch (Exception ex) {
+                throw ex;
+            }
         }
     }
 }
