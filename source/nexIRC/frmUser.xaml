@@ -16,10 +16,10 @@
         <phone:Pivot Title="nexIRC - Customize">
             <phone:PivotItem Header="IRC">
                 <Grid>
-                    <Button Name="cmdSave" Content="Save" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                    <Button Name="cmdSave" Content="Save" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="cmdSave_Click"/>
                     <StackPanel Margin="8,-7,0,0">
-                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Nickname: " VerticalAlignment="Top"/>
-                        <TextBox Name="txtNickname" HorizontalAlignment="Left" Height="72" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="448"/>
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="E-mail Address: " VerticalAlignment="Top"/>
+                        <TextBox Name="txtEmailAddress" HorizontalAlignment="Left" Height="72" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="448"/>
                         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Alternate Nickname: " VerticalAlignment="Top"/>
                         <TextBox Name="txtAltNickname" HorizontalAlignment="Left" Height="72" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="448" Margin="0,0,-8,0"/>
                         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Username: " VerticalAlignment="Top"/>

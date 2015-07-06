@@ -59,14 +59,15 @@
                 <Grid>
                     <StackPanel Margin="0,4,16,0" Orientation="Vertical" VerticalAlignment="Top">
                         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                            <Border Background="Navy" Height="173" Width="173" Margin="12,0,0,0" Name="btnServersAndNetworks"><TextBlock Name="tblServersAndNetworks" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30">Network</TextBlock></Border>
-                            <Border Background="Navy" Height="173" Width="173" Margin="12,0,0,0" Name="btnUser"><TextBlock Name="tblUser" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30">User</TextBlock></Border>
-                            <Border Background="Navy" Height="173" Width="173" Margin="12,0,0,0" Name="btnSettings"><TextBlock Name="tblSettings" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30">Settings</TextBlock></Border>
-                        </StackPanel>
-                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,12,0,0">
-                            <Border Background="Navy" Height="173" Width="173" Margin="12,0,0,0" Name="btnText"><TextBlock Name="tblText" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30">Text</TextBlock></Border>
-                            <Border Background="Navy" Height="173" Width="173" Margin="12,0,0,0" Name="btnDcc"><TextBlock Name="tblDcc" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30">DCC</TextBlock></Border>
-                            <Border Background="Navy" Height="173" Width="173" Margin="12,0,0,0" Name="btnNotify"><TextBlock Name="tblNotify" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30">Notify</TextBlock></Border>
+                            <Border Background="Navy" Height="173" Width="173" Margin="12,0,0,0" Name="btnLogin">
+                                <TextBlock Name="tblLogin" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30">Login</TextBlock>
+                            </Border>
+                            <Border Background="Navy" Height="173" Width="173" Margin="12,0,0,0" Name="btnUndefined1">
+                                <TextBlock Name="tblUndefined1" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30">Undefined 1</TextBlock>
+                            </Border>
+                            <Border Background="Navy" Height="173" Width="173" Margin="12,0,0,0" Name="btnUndefined2">
+                                <TextBlock Name="tblUndefined2" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30">Undefined 2</TextBlock>
+                            </Border>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
